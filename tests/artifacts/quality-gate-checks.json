@@ -1,0 +1,81 @@
+{
+  "artifact": "quality-gate.html",
+  "sha256": "1321a89fa88ba06be83e6f8f664d5396218aedc70d249470adeb3a808a66a68b",
+  "browser": "Chrome/154.0.8037.97 headless",
+  "method": "Native input via Chrome debugging protocol and DOM assertions",
+  "desktop_window_requested": {
+    "height": 900,
+    "width": 1280
+  },
+  "narrow_css_viewport": {
+    "height": 900,
+    "width": 360
+  },
+  "checks": [
+    {
+      "name": "Initial report identifies its applied minimum",
+      "passed": true
+    },
+    {
+      "name": "Native threshold edit marks existing output previous",
+      "passed": true
+    },
+    {
+      "name": "Matching draft restores freshness without a new run",
+      "passed": true
+    },
+    {
+      "name": "Run applies threshold and retains previous provenance",
+      "passed": true
+    },
+    {
+      "name": "Second edit preserves known prior output",
+      "passed": true
+    },
+    {
+      "name": "Invalid minimum \"\" cannot create a report",
+      "passed": true
+    },
+    {
+      "name": "Invalid minimum \"-1\" cannot create a report",
+      "passed": true
+    },
+    {
+      "name": "Invalid minimum \"101\" cannot create a report",
+      "passed": true
+    },
+    {
+      "name": "Zero passing records is an explicit successful empty result",
+      "passed": true
+    },
+    {
+      "name": "Valid decimal threshold follows the existing numerical rule",
+      "passed": true
+    },
+    {
+      "name": "Enter runs the form and retains focus on the threshold",
+      "passed": true
+    },
+    {
+      "name": "Expanded history retains passing table and provenance",
+      "passed": true
+    },
+    {
+      "name": "360 CSS px viewport retains content without page overflow",
+      "passed": true
+    },
+    {
+      "name": "Reload matches disclosed non-persistent history",
+      "passed": true
+    },
+    {
+      "name": "No browser runtime exceptions",
+      "passed": true
+    }
+  ],
+  "boundaries": [
+    "Desktop requested window is not measured inner viewport.",
+    "No representative users, complete Tab order, screen reader, 200% enlargement or full WCAG evaluation.",
+    "No production processing or persistent backend."
+  ]
+}

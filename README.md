@@ -46,6 +46,9 @@ python -m unittest discover -s tests -p "test_*.py"
 
 The validator checks packaging, internal references, source IDs, pattern completeness, suspicious secret-like content, and forbidden private artifacts. It is not a usability, accessibility, or comprehensive security audit. See [testing](tests/README.md) for behavioral evaluation and [contributing](CONTRIBUTING.md) for evidence changes.
 
+
+Initial publication: package/regression checks passed locally. Automatic GitHub CI is not enabled because the current publishing credentials cannot write workflow files. The offline ZIP includes the workflow definition; the public branch excludes it.
+
 ## Research status and limits
 
 The initial release is a structured synthesis of primary design standards, original design-system guidance, and author-published usability/AI-interaction research, reviewed on 2026-10-08. Sources differ in strength and scope; [the register](references/evidence.md) states what each supports.

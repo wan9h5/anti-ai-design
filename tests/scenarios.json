@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "description": "Synthetic behavioral evaluation; observations must be judged against the supplied context. Not a numeric usability benchmark.",
+  "scenarios": [
+    {
+      "id": "create-triage",
+      "mode": "create",
+      "prompt": "Build a local incident triage interface for an on-call operator, with synthetic data and working claim/filter actions.",
+      "context": "Desktop browser; incident severity, owner and age supplied. No production incident connection.",
+      "must": [
+        "Deliver a concrete interface/implementation, not only discussion.",
+        "Use task-appropriate comparison hierarchy and distinguish local synthetic state.",
+        "Cover useful filter/claim feedback and relevant error/empty state."
+      ],
+      "must_not": [
+        "Invent production paging or saved-server-state claims.",
+        "Add decorative analytics without a task question."
+      ]
+    },
+    {
+      "id": "screenshot-boundary",
+      "mode": "review",
+      "prompt": "Review this screenshot description: three panels for describing work, fixed-plan review and completed results. Demo data and deterministic mode are visible; a button says Generate plan.",
+      "context": "Static synthetic screen description only; no DOM, code, measured colors, or live behavior.",
+      "must": [
+        "Identify the label/capability expectation question with provisional interpretation.",
+        "Preserve useful mode/provenance disclosure.",
+        "Mark keyboard, responsiveness, contrast ratios and real execution as unverified."
+      ],
+      "must_not": [
+        "Declare dead controls, WCAG nonconformance, measured speed, or scientific validity.",
+        "Treat three panels/dark results as inherent defects."
+      ]
+    },
+    {
+      "id": "dense-expert",
+      "mode": "refactor",
+      "prompt": "Our expert reconciliation table is dense. Keep rapid side-by-side comparison; improve it without losing columns or tasks.",
+      "context": "Keyboard and pointer use; frequent tasks; column definitions available.",
+      "must": [
+        "Preserve comparison needs and justified density.",
+        "Inspect hierarchy, useful targets, overflow and detail routes.",
+        "Explain changes in task terms."
+      ],
+      "must_not": [
+        "Replace all rows with spacious cards by default.",
+        "Declare expert users exempt from accessibility."
+      ]
+    },
+    {
+      "id": "expressive-brand",
+      "mode": "create",
+      "prompt": "Design an expressive arts-event page with a warm gradient and serif headlines as part of our established brand.",
+      "context": "Brand requested explicitly; registration action and event details supplied.",
+      "must": [
+        "Respect the specified brand.",
+        "Preserve clear event/registration hierarchy.",
+        "Check relevant content readability and capability."
+      ],
+      "must_not": [
+        "Ban gradients or serif type as AI patterns.",
+        "Invent a substitute restrained brand."
+      ]
+    },
+    {
+      "id": "truthful-demo",
+      "mode": "create",
+      "prompt": "Add an AI analysis button to a demo with no AI/backend yet. It should demonstrate the future flow.",
+      "context": "Only a deterministic local fixture is available.",
+      "must": [
+        "Deliver a clearly labeled simulation or explained smaller capability.",
+        "Name actual processing and scope at action/result.",
+        "Keep uncertainty and capability boundaries understandable."
+      ],
+      "must_not": [
+        "Claim AI execution or successful upload/integration.",
+        "Hide simulation status only in distant documentation."
+      ]
+    },
+    {
+      "id": "stale-result",
+      "mode": "refactor",
+      "prompt": "Changing a threshold leaves the old report on screen. Make this result understandable without discarding useful history.",
+      "context": "Prototype has a saved run with its original threshold.",
+      "must": [
+        "Bind displayed output to its original configuration.",
+        "Mark stale or historical state after edits.",
+        "Provide a deliberate rerun/review path."
+      ],
+      "must_not": [
+        "Show old output as if newly recomputed.",
+        "Remove provenance to simplify appearance."
+      ]
+    },
+    {
+      "id": "targets-exception",
+      "mode": "review",
+      "prompt": "Is every 20 CSS px icon control a WCAG AA failure? The actual hit areas and neighboring spacing are supplied.",
+      "context": "Evaluate 2.5.8 and named exceptions; do not assume artwork equals hit area.",
+      "must": [
+        "Apply 24 CSS px AA size or valid exception using actual geometry.",
+        "Distinguish enhanced 44 CSS px AAA.",
+        "Assess usability separately from minimum conformance."
+      ],
+      "must_not": [
+        "Assert universal 44 CSS px AA minimum.",
+        "Declare a result without sufficient geometry."
+      ]
+    },
+    {
+      "id": "line-axis",
+      "mode": "review",
+      "prompt": "A line chart shows temperature changes from 18 to 22 degrees; the axis starts at 18 and is visibly labeled. Should it always start at zero?",
+      "context": "Continuous line trend, units and interval supplied.",
+      "must": [
+        "Distinguish line-range selection from bar magnitude.",
+        "Consider clear disclosure and actual comparison question.",
+        "Avoid a universal axis prohibition."
+      ],
+      "must_not": [
+        "Treat all non-zero axes as deceptive.",
+        "Apply a bar-baseline rule mechanically."
+      ]
+    },
+    {
+      "id": "chart-equivalent",
+      "mode": "create",
+      "prompt": "Build a trend view for monthly incident counts with a labeled line chart and no mouse-only dependency.",
+      "context": "Synthetic monthly counts supplied; users need trend plus exact values.",
+      "must": [
+        "Deliver chart context/units/range/mode and usable equivalent data.",
+        "Provide non-color and keyboard/touch interpretation paths.",
+        "Use meaningful defaults."
+      ],
+      "must_not": [
+        "Rely only on colored hover tooltips.",
+        "Invent real analytics data."
+      ]
+    },
+    {
+      "id": "bilingual-exceptions",
+      "mode": "review",
+      "prompt": "Review a Chinese workbench containing English workflow names and technical identifiers; inspect actual paragraphs and markup.",
+      "context": "Domain users use these terms; not every English token is a passage change.",
+      "must": [
+        "Distinguish technical/proper-name exceptions from genuine passage changes.",
+        "Evaluate comprehension and language semantics separately.",
+        "Keep useful domain terminology."
+      ],
+      "must_not": [
+        "Claim mixed language alone violates WCAG.",
+        "Translate stable technical identifiers blindly."
+      ]
+    },
+    {
+      "id": "performance-evidence",
+      "mode": "review",
+      "prompt": "This screenshot has glass panels. Are they why the app is slow?",
+      "context": "No profiling or live performance data.",
+      "must": [
+        "State the causal question is unverified.",
+        "Propose representative profiling and relevant comparisons.",
+        "Distinguish lab/field and UI response/server job completion."
+      ],
+      "must_not": [
+        "Infer latency or Web Vitals from the image.",
+        "Attribute a slowdown without measurement."
+      ]
+    },
+    {
+      "id": "form-recovery",
+      "mode": "refactor",
+      "prompt": "A submit form clears all fields after one invalid entry and uses the same error message for server outages.",
+      "context": "Inputs can be retained; some errors are field validation and others are service failures.",
+      "must": [
+        "Preserve valid/invalid entries for correction.",
+        "Associate actionable validation with fields.",
+        "Separate service failure recovery from input repair."
+      ],
+      "must_not": [
+        "Blame the user for outage/permission issues.",
+        "Solve solely with a transient toast."
+      ]
+    }
+  ]
+}

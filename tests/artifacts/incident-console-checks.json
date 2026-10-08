@@ -1,0 +1,125 @@
+{
+  "browser": "Installed Chrome, headless desktop engine",
+  "version": "Chrome/154.0.8037.97",
+  "viewport": {
+    "width": 1440,
+    "height": 1050,
+    "deviceScaleFactor": 1
+  },
+  "checks": [
+    {
+      "name": "Initial synthetic queue: eight active, four unclaimed, one assigned to you",
+      "result": "pass"
+    },
+    {
+      "name": "Severities then age are sorted; oldest P1 first",
+      "result": "pass"
+    },
+    {
+      "name": "Capability boundary is visible near the action and result",
+      "result": "pass"
+    },
+    {
+      "name": "Ownership filter shows four unclaimed rows and selection follows results",
+      "result": "pass"
+    },
+    {
+      "name": "Claim changes ownership and removes the incident from Unclaimed",
+      "result": "pass"
+    },
+    {
+      "name": "Selection does not leave hidden claimed incident details",
+      "result": "pass"
+    },
+    {
+      "name": "Undo returns claim to the unclaimed queue",
+      "result": "pass"
+    },
+    {
+      "name": "Slash shortcut moves keyboard focus to search",
+      "result": "pass"
+    },
+    {
+      "name": "No-result state removes stale detail and retains recovery",
+      "result": "pass"
+    },
+    {
+      "name": "Escape clears search and restores all rows",
+      "result": "pass"
+    },
+    {
+      "name": "Native severity filter is next in keyboard order",
+      "result": "pass"
+    },
+    {
+      "name": "Severity filter works with keyboard",
+      "result": "pass"
+    },
+    {
+      "name": "Native service filter follows severity",
+      "result": "pass"
+    },
+    {
+      "name": "Combined filters match current inputs, including empty state",
+      "result": "pass"
+    },
+    {
+      "name": "Keyboard drilldown moves focus to selected incident heading",
+      "result": "pass"
+    },
+    {
+      "name": "Keyboard claim changes ownership and focuses next visible incident after removal",
+      "result": "pass"
+    },
+    {
+      "name": "My claims shows both snapshot and locally claimed incidents",
+      "result": "pass"
+    },
+    {
+      "name": "Local claim persists after reload",
+      "result": "pass"
+    },
+    {
+      "name": "Release returns local claim to unclaimed state",
+      "result": "pass"
+    },
+    {
+      "name": "Claiming the last matching incident focuses empty-state recovery",
+      "result": "pass"
+    },
+    {
+      "name": "Keyboard undo restores the last matching incident and ownership-filter focus",
+      "result": "pass"
+    },
+    {
+      "name": "Releasing the last matching local claim focuses empty-state recovery",
+      "result": "pass"
+    },
+    {
+      "name": "Other operator assignment cannot be silently taken over",
+      "result": "pass"
+    },
+    {
+      "name": "320 CSS px surrounding page has no horizontal overflow",
+      "result": "pass"
+    },
+    {
+      "name": "Small-width search and filter controls remain in viewport",
+      "result": "pass"
+    },
+    {
+      "name": "Visible focus rule is active for keyboard focus",
+      "result": "pass"
+    }
+  ],
+  "boundaries": [
+    "No representative operator study.",
+    "No screen-reader or whole-product accessibility evaluation.",
+    "Actual browser zoom and text-only enlargement were not tested.",
+    "Storage-denial and cross-tab concurrency were not exercised.",
+    "No production connection exists."
+  ],
+  "completed": true,
+  "artifact": "incident-console.html",
+  "sha256": "02d0fa7d375c6c70dda389ccd63e32675bf0d45f1079c65fa7ce5af7763675cc"
+}

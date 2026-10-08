@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relay — Local incident triage</title>
+<style>
+:root{--ink:#152c32;--muted:#51676b;--line:#ccd7d6;--surface:#fff;--page:#f3f6f4;--teal:#075f58;--teal-soft:#e5f1ed;--amber:#784f00;--amber-soft:#fff4d8;--red:#aa2927;--red-soft:#fff0ee;--blue:#285485}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:default;color:#607073;background:#edf0ee;border-color:#d2dbd8}
+a{color:var(--teal)}
+button,input,select,a{outline-offset:3px}
+:focus-visible{outline:3px solid #146cc2}
+.skip{position:absolute;left:18px;top:-80px;padding:12px;background:white;z-index:20}
+.skip:focus{top:12px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 28px;border-bottom:1px solid var(--line);background:#fff}
+.brand{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:750;letter-spacing:-.4px}
+.mark{display:grid;place-items:center;background:var(--ink);color:white;width:30px;height:30px;font-size:19px}
+.brand span:last-child{font-weight:450;font-size:14px;color:var(--muted);letter-spacing:0;border-left:1px solid var(--line);padding-left:12px}
+.operator{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.avatar{border:1px solid var(--line);padding:5px 7px;font-weight:700;color:var(--ink)}
+.demo-bar{padding:10px 28px;background:var(--amber-soft);border-bottom:1px solid #e3d2a3;color:#614100;font-size:13px}
+.demo-bar strong{margin-right:8px}
+main{max-width:1600px;margin:auto;padding:26px 28px 18px}
+.page-title{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}
+h1{font-size:28px;line-height:1.15;letter-spacing:-.7px;margin:0 0 8px}
+.subtitle{color:var(--muted);margin:0;font-size:14px}
+.snapshot{text-align:right;font-size:12px;color:var(--muted)}
+.snapshot strong{display:block;color:var(--ink);font-weight:600}
+.workarea{display:grid;grid-template-columns:minmax(640px,1fr) 360px;gap:20px;align-items:start}
+.queue,.detail{background:var(--surface);border:1px solid var(--line)}
+.toolbar{padding:16px;border-bottom:1px solid var(--line)}
+.scopes{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap}
+.scope{min-height:36px;padding:7px 12px;border:1px solid transparent;background:transparent;color:var(--muted);font-size:13px;font-weight:600}
+.scope[aria-pressed="true"]{background:var(--teal-soft);color:var(--teal);border-color:#a7c7bb}
+.scope span{margin-left:7px;font-weight:500}
+.filters{display:grid;grid-template-columns:minmax(190px,1fr) 130px 150px;gap:12px}
+.field{min-width:0}
+label{display:block;font-size:12px;font-weight:650;margin-bottom:5px}
+input,select{width:100%;height:38px;border:1px solid #8eaaa9;background:white;border-radius:2px;padding:7px 9px;color:var(--ink)}
+input::placeholder{color:#637b80}
+.search-wrap{position:relative}
+.search-wrap input{padding-right:29px}
+kbd{font:11px/1.3 ui-monospace,monospace;border:1px solid #afbfbd;padding:1px 4px;border-radius:2px}
+.search-wrap kbd{position:absolute;right:10px;top:12px;color:#637b80}
+.results-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;font-size:12px;color:var(--muted)}
+.text-button{border:0;background:transparent;color:var(--teal);font-size:12px;text-decoration:underline;text-underline-offset:3px;min-height:30px;padding:4px}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:640px}
+caption{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+thead{background:#f6f8f7}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;text-align:left;font-weight:650;color:#51686d;border-block:1px solid var(--line);padding:10px 12px}
+td{border-bottom:1px solid #e3e9e7;padding:14px 12px;vertical-align:top;font-size:13px}
+tr:last-child td{border-bottom:0}
+tbody tr.selected{background:#f0f7f4}
+tbody tr.selected td:first-child{box-shadow:inset 3px 0 var(--teal)}
+th:nth-child(1){width:58px}th:nth-child(2){width:auto}th:nth-child(3){width:91px}th:nth-child(4){width:60px}th:nth-child(5){width:103px}th:nth-child(6){width:101px}
+.severity{font-size:11px;font-weight:750;display:inline-block;padding:3px 6px;line-height:1.4;border:1px solid;border-radius:2px}
+.severity.p1{color:var(--red);background:var(--red-soft);border-color:#e6b8b1}
+.severity.p2{color:var(--amber);background:var(--amber-soft);border-color:#e7d29a}
+.severity.p3{color:#355e72;background:#eef4f6;border-color:#b6cbd4}
+.service{font-size:11px;color:var(--muted);margin-bottom:5px}
+.incident-open{display:block;text-align:left;padding:0;line-height:1.4;font-size:13px;font-weight:650;color:var(--ink);border:0;background:none}
+.incident-open:hover{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.incident-id{font-size:10px;color:#63777b;margin-top:5px;letter-spacing:.2px}
+.impact{font-variant-numeric:tabular-nums;font-weight:600}
+.small{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+.age{font-variant-numeric:tabular-nums}
+.owner{display:block;line-height:1.35}
+.unclaimed{color:var(--amber);font-weight:650}
+.status{display:block;font-size:11px;color:var(--muted);margin-top:4px}
+.row-claim{width:100%;min-height:32px;padding:5px 6px;font-size:12px;background:#fff;color:var(--teal);border:1px solid #80a69c;border-radius:2px}
+.row-claim:hover{background:var(--teal-soft)}
+.mine-label{font-size:11px;font-weight:650;color:var(--teal);display:block;padding-block:6px}
+.row-action-note{font-size:10px;line-height:1.3;color:#607276;margin-top:4px;display:block}
+.empty{padding:48px 24px;text-align:center;border-top:1px solid var(--line)}
+.empty h2{font-size:18px;margin:0 0 6px}
+.empty p{color:var(--muted);font-size:13px;margin:0 0 14px}
+.queue-foot{font-size:11px;color:var(--muted);padding:12px 16px;border-top:1px solid var(--line)}
+.detail{position:sticky;top:18px}
+.detail-top{padding:20px;border-bottom:1px solid var(--line)}
+.detail-eyebrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.detail-eyebrow .incident-id{margin:0;font-size:11px}
+.detail h2{font-size:21px;line-height:1.25;letter-spacing:-.3px;margin:0 0 9px}
+.detail-service{font-size:13px;color:var(--muted);margin:0}
+.detail-section{padding:18px 20px;border-bottom:1px solid var(--line)}
+.detail h3{font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:0 0 9px}
+.detail p{font-size:13px;margin:0}
+.detail dl{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;margin:0}
+dt{font-size:11px;color:var(--muted);margin-bottom:3px}
+dd{font-size:13px;margin:0;font-weight:600}
+.evidence{margin:0;padding:0;list-style:none}
+.evidence li{font-size:12px;border-left:2px solid #c4d9d2;padding:0 0 15px 12px;line-height:1.45}
+.evidence li:last-child{padding-bottom:0}
+.evidence time{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}
+.detail-actions{padding:18px 20px}
+.primary{border:1px solid var(--teal);background:var(--teal);color:#fff;min-height:40px;padding:9px 14px;border-radius:2px;font-weight:650;font-size:13px}
+.primary:hover{background:#064d47}
+.secondary{border:1px solid #91aba3;background:white;color:var(--teal);min-height:36px;padding:7px 12px;border-radius:2px;font-size:13px}
+.secondary:hover{background:var(--teal-soft)}
+.detail-actions .primary,.detail-actions .secondary{width:100%}
+.action-boundary{color:var(--muted);font-size:11px!important;line-height:1.45;margin-top:9px!important}
+.back{margin-top:12px}
+.announcement{margin-top:18px;padding:12px 16px;border:1px solid #afcbbb;background:#eef7f1;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px}
+.announcement[hidden]{display:none}
+.announcement button{flex-shrink:0}
+.footer{display:flex;justify-content:space-between;gap:16px;margin-top:20px;font-size:11px;color:var(--muted)}
+.footer p{margin:0}
+.detail-empty{padding:30px 20px;color:var(--muted);font-size:13px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:1420px){.workarea{grid-template-columns:minmax(700px,1fr) 400px}td{padding-block:16px}}
+@media(max-width:1100px){.workarea{grid-template-columns:minmax(0,1fr)}.detail{position:static}.detail-layout{display:grid;grid-template-columns:1fr 1fr}.detail-top{grid-column:1/-1}.detail-actions{grid-column:1/-1}.detail-section{border-right:1px solid var(--line)}}
+@media(max-width:640px){.topbar,main{padding:16px}.demo-bar{padding:10px 16px}.topbar{align-items:flex-start}.operator{font-size:11px}.brand span:last-child{display:none}.page-title{align-items:flex-start;flex-direction:column;gap:10px}.snapshot{text-align:left}.filters{grid-template-columns:1fr 1fr}.field:first-child{grid-column:1/-1}.toolbar{padding:12px}.scopes{gap:0}.scope{padding-inline:8px}.results-bar{padding-inline:12px}.detail-layout{display:block}.detail-section{border-right:0}.footer{flex-direction:column;gap:8px}.announcement{align-items:flex-start;flex-wrap:wrap}h1{font-size:25px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a href="#queue-heading" class="skip">Skip to incident queue</a>
+<header class="topbar">
+<div class="brand"><div class="mark" aria-hidden="true">R</div>Relay<span>Incident triage</span></div>
+<div class="operator"><span class="avatar" aria-hidden="true">DO</span><span>Demo operator<br><strong>You are on call</strong></span></div>
+</header>
+<div class="demo-bar"><strong>LOCAL DEMO</strong>Synthetic incidents. Filters and claims work in this browser only. No production incident connection.</div>
+<main>
+<div class="page-title">
+<div><h1 id="queue-heading" tabindex="-1">Incident queue</h1><p class="subtitle">Review impact, inspect the evidence, and claim the next incident.</p></div>
+<div class="snapshot"><strong>Fixed synthetic snapshot</strong>08 Oct 2026 · 13:47 UTC</div>
+</div>
+<div class="workarea">
+<section class="queue" aria-labelledby="queue-heading">
+<div class="toolbar">
+<div class="scopes" role="group" aria-label="Incident ownership filter">
+<button class="scope" data-scope="all" aria-pressed="true">All active <span id="all-count"></span></button>
+<button class="scope" data-scope="unclaimed" aria-pressed="false">Unclaimed <span id="unclaimed-count"></span></button>
+<button class="scope" data-scope="mine" aria-pressed="false">My claims <span id="mine-count"></span></button>
+</div>
+<div class="filters">
+<div class="field"><label for="search">Find an incident</label><div class="search-wrap"><input id="search" type="search" placeholder="Incident, service, or ID" autocomplete="off" aria-describedby="search-hint"><kbd aria-hidden="true">/</kbd></div><span id="search-hint" class="sr">Press slash from outside a field to focus search. Escape clears the search.</span></div>
+<div class="field"><label for="severity">Severity</label><select id="severity"><option value="all">All severities</option><option value="P1">P1 · Critical</option><option value="P2">P2 · High</option><option value="P3">P3 · Moderate</option></select></div>
+<div class="field"><label for="service">Service</label><select id="service"><option value="all">All services</option></select></div>
+</div>
+</div>
+<div class="results-bar"><span id="results-summary" role="status" aria-live="polite"></span><button id="clear-filters" class="text-button">Clear filters</button></div>
+<div class="table-scroll" id="table-wrapper" tabindex="0" role="region" aria-label="Incident queue table; scroll horizontally on small screens">
+<table><caption>Active synthetic incidents, ordered by severity then longest age. Claim actions change demo ownership only.</caption>
+<thead><tr><th scope="col">Sev.</th><th scope="col">Service / incident</th><th scope="col">Impact</th><th scope="col">Age</th><th scope="col">Owner / status</th><th scope="col">Demo claim</th></tr></thead>
+<tbody id="incident-rows"></tbody>
+</table>
+</div>
+<div id="empty" class="empty" hidden><h2>No incidents match</h2><p>Try a broader search or clear the current filters.</p><button id="empty-clear" class="secondary">Clear filters</button></div>
+<div class="queue-foot">P1 Critical · P2 High · P3 Moderate. Ordered by severity, then longest age.</div>
+</section>
+<aside class="detail" id="detail" aria-label="Selected incident details"></aside>
+</div>
+<div class="announcement" id="feedback" hidden><span id="feedback-text" role="status" aria-live="polite" aria-atomic="true"></span><button class="secondary" id="undo-claim" hidden>Undo claim</button></div>
+<footer class="footer"><p id="storage-label">Demo claims are saved on this browser. Synthetic evidence does not refresh.</p><button id="reset-demo" class="text-button">Reset demo claims</button></footer>
+</main>
+<script>
+'use strict';
+const snapshot = '2026-10-08T13:47:00Z';
+const incidents = [
+{id:'INC-1048',severity:'P1',service:'Checkout',region:'Global',title:'Payment confirmation timing out',impact:'18.2%',impactUnit:'checkouts fail',age:23,owner:null,status:'Investigating',impactText:'Customers can add items to a cart but some payments do not return a confirmation. The synthetic sample shows an 18.2% checkout failure rate across all regions.',firstCheck:'Compare payment-gateway response times with the checkout worker backlog. Confirm whether payment attempts complete before recommending a retry.',evidence:[['13:44','Checkout failure rate is 18.2%; baseline in this sample is 0.4%.'],['13:39','Payment confirmation p95 rose to 11.2 s, above the synthetic 2 s threshold.'],['13:24','Incident created after confirmation timeout alerts crossed the threshold.']]},
+{id:'INC-1046',severity:'P1',service:'Public API',region:'EU West',title:'Elevated 502s on account endpoints',impact:'9.4%',impactUnit:'API requests fail',age:31,owner:'Mina K.',status:'Investigating',impactText:'Account reads intermittently return 502 responses in EU West. The synthetic sample shows 9.4% of API requests failing; other regions remain at the sample baseline.',firstCheck:'Inspect upstream connection errors in EU West. Check whether failing requests share the same application pool.',evidence:[['13:45','EU West account endpoints: 9.4% 502 responses.'],['13:33','Upstream connection resets increased in one application pool.'],['13:16','Incident created by the synthetic API error threshold.']]},
+{id:'INC-1043',severity:'P2',service:'Notifications',region:'Global',title:'Delivery queue more than 10 minutes behind',impact:'12.6k',impactUnit:'messages delayed',age:54,owner:null,status:'New',impactText:'Email and push notifications are delayed. In this synthetic snapshot, 12,640 messages are queued and the oldest pending message is 14 minutes old.',firstCheck:'Check consumer throughput and downstream delivery errors. Keep delayed delivery distinct from permanent delivery failure.',evidence:[['13:43','Oldest queued message reached 14 min.'],['13:36','Consumer throughput: 310/min versus 820/min incoming.'],['12:53','Incident created when queue delay crossed 10 min.']]},
+{id:'INC-1047',severity:'P2',service:'Authentication',region:'US East',title:'Sign-in failures after token refresh',impact:'3.1%',impactUnit:'sign-ins fail',age:28,owner:'You',status:'Investigating',impactText:'Some returning sessions fail when refreshing tokens in US East. The synthetic sample shows 3.1% of sign-ins affected; new sign-ins are at the sample baseline.',firstCheck:'Compare refreshed-token validation with newly issued tokens. Check the signing key version recorded by each validator.',evidence:[['13:42','Token refresh rejects increased to 3.1%.'],['13:31','Rejects correlate with a single synthetic key version.'],['13:19','Incident opened from a synthetic sign-in error alert.']]},
+{id:'INC-1045',severity:'P2',service:'Search',region:'Global',title:'New catalog items missing from results',impact:'2.8k',impactUnit:'items unindexed',age:37,owner:null,status:'New',impactText:'Recently added catalog items cannot be found through search in this synthetic sample. Existing indexed items remain searchable.',firstCheck:'Compare the indexer checkpoint with the catalog event stream. Confirm whether items are pending or rejected.',evidence:[['13:46','2,830 catalog items waiting beyond the sample indexing window.'],['13:35','Indexer checkpoint has not advanced for 19 min.'],['13:10','Synthetic indexing lag alert created the incident.']]},
+{id:'INC-1044',severity:'P2',service:'Web frontend',region:'APAC',title:'Product pages responding slowly',impact:'2.9 s',impactUnit:'p95 response',age:42,owner:'Eli R.',status:'Mitigating',impactText:'Product pages in APAC are responding slowly. The synthetic p95 server response time is 2.9 seconds, compared with a sample baseline of 0.8 seconds.',firstCheck:'Check origin latency and cache misses in APAC. Use the synthetic mitigation note to avoid duplicating another operator’s work.',evidence:[['13:45','Synthetic mitigation note: cache fill is in progress.'],['13:32','Cache hit rate fell from 91% to 64% in the sample.'],['13:05','Page-response threshold generated the incident.']]},
+{id:'INC-1041',severity:'P3',service:'Reporting',region:'Global',title:'Scheduled exports waiting for workers',impact:'47',impactUnit:'exports delayed',age:86,owner:null,status:'New',impactText:'Scheduled report exports are delayed. The synthetic sample contains 47 waiting exports; no export has been deleted.',firstCheck:'Inspect available export workers and the queue’s oldest job. Check whether delay affects the next scheduled delivery.',evidence:[['13:41','47 synthetic export jobs waiting for a worker.'],['13:20','Available worker count is 2 of the sample target of 6.'],['12:21','Synthetic export delay threshold created the incident.']]},
+{id:'INC-1042',severity:'P3',service:'Cache',region:'US West',title:'Session cache eviction rate increasing',impact:'1.8%',impactUnit:'cache keys evicted',age:63,owner:'Nora J.',status:'Monitoring',impactText:'The synthetic session cache eviction rate has increased in US West. No corresponding customer error increase appears in this sample.',firstCheck:'Compare cache memory use and key expiry rates. Continue watching customer errors before escalating severity.',evidence:[['13:44','Evictions at 1.8% of sampled keys.'],['13:25','No related customer error increase in the synthetic sample.'],['12:44','Cache pressure alert created the incident.']]}
+];
+const storageKey = 'relay-local-triage-claims-v1';
+let scope = 'all';
+let selectedId = 'INC-1048';
+let localClaims = {};
+let storageAvailable = true;
+let lastClaim = null;
+try {
+  const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  for (const id of Object.keys(saved)) if (incidents.some(i => i.id === id && i.owner === null) && saved[id] === true) localClaims[id] = true;
+} catch (_) { storageAvailable = false; }
+const $ = id => document.getElementById(id);
+const escapeHtml = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ownerOf = incident => localClaims[incident.id] ? 'You' : incident.owner;
+const ageOf = mins => mins >= 60 ? Math.floor(mins/60)+'h '+(mins%60)+'m' : mins+'m';
+const filtered = () => incidents.filter(i => {
+ const owner = ownerOf(i);
+ return (scope==='all' || scope==='unclaimed' && !owner || scope==='mine' && owner==='You') &&
+ ($('severity').value==='all' || i.severity===$('severity').value) &&
+ ($('service').value==='all' || i.service===$('service').value) &&
+ [i.id,i.title,i.service,i.region].join(' ').toLowerCase().includes($('search').value.trim().toLowerCase());
+}).sort((a,b) => a.severity.localeCompare(b.severity) || b.age-a.age);
+function storeClaims(next) {
+ try {localStorage.setItem(storageKey, JSON.stringify(next)); storageAvailable = true;}
+ catch (_) {storageAvailable = false;}
+ localClaims = next;
+}
+function announce(message, undo=false) {
+ $('feedback').hidden = false;
+ $('feedback-text').textContent = message;
+ $('undo-claim').hidden = !undo;
+}
+function claim(id) {
+ const incident = incidents.find(i=>i.id===id);
+ if (!incident || ownerOf(incident)) return;
+ storeClaims({...localClaims,[id]:true});
+ lastClaim = id;
+ render();
+ announce(id+' claimed by you in this demo. '+(storageAvailable?'Saved on this browser.':'Browser storage is unavailable; saved for this open page only.'),true);
+}
+function release(id) {
+ if (!localClaims[id]) return;
+ const next = {...localClaims}; delete next[id]; storeClaims(next);
+ lastClaim = null; render();
+ announce(id+' returned to Unclaimed in this demo.');
+}
+function openIncident(id, keyboard=false) {
+ selectedId = id; render();
+ if (keyboard) $('detail-heading')?.focus();
+}
+function clearFilters() {
+ scope='all'; $('search').value=''; $('severity').value='all'; $('service').value='all'; render();
+}
+function render() {
+ const visible = filtered();
+ if (!visible.some(i=>i.id===selectedId)) selectedId=visible[0]?.id || null;
+ $('all-count').textContent=incidents.length;
+ $('unclaimed-count').textContent=incidents.filter(i=>!ownerOf(i)).length;
+ $('mine-count').textContent=incidents.filter(i=>ownerOf(i)==='You').length;
+ document.querySelectorAll('[data-scope]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scope===scope)));
+ const parts=[scope==='all'?'All active':scope==='unclaimed'?'Unclaimed':'My claims'];
+ if ($('severity').value!=='all') parts.push($('severity').value);
+ if ($('service').value!=='all') parts.push($('service').value);
+ if ($('search').value.trim()) parts.push('“'+$('search').value.trim()+'”');
+ $('results-summary').textContent=visible.length+' of '+incidents.length+' incidents · '+parts.join(' / ');
+ $('empty').hidden=visible.length!==0; $('table-wrapper').hidden=visible.length===0;
+ $('incident-rows').innerHTML=visible.map(i=>{
+ const owner=ownerOf(i);
+ const action=!owner ? '<button class="row-claim" data-claim="'+i.id+'" aria-label="Claim '+i.id+' in the local demo">Claim</button>' :
+ owner==='You' ? '<span class="mine-label">Claimed by you</span>' : '<span class="row-action-note">Assigned to<br>'+escapeHtml(owner)+'</span>';
+ return '<tr class="'+(selectedId===i.id?'selected':'')+'"><td><span class="severity '+i.severity.toLowerCase()+'">'+i.severity+'</span></td>'+
+ '<td><div class="service">'+escapeHtml(i.service)+' · '+i.region+'</div><button id="open-'+i.id+'" class="incident-open" data-open="'+i.id+'" aria-pressed="'+(selectedId===i.id)+'" aria-controls="detail">'+escapeHtml(i.title)+'</button><div class="incident-id">'+i.id+'</div></td>'+
+ '<td><span class="impact">'+i.impact+'</span><span class="small">'+i.impactUnit+'</span></td><td class="age">'+ageOf(i.age)+'</td>'+
+ '<td><span class="owner '+(!owner?'unclaimed':'')+'">'+(owner==='You'?'You':owner?escapeHtml(owner):'Unclaimed')+'</span><span class="status">'+i.status+'</span></td><td>'+action+'</td></tr>';
+ }).join('');
+ $('incident-rows').querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',e=>openIncident(b.dataset.open,e.detail===0)));
+ $('incident-rows').querySelectorAll('[data-claim]').forEach(b=>b.addEventListener('click',()=>{
+  const id=b.dataset.claim; claim(id);
+  if (visible.some(i=>i.id===id) && scope!=='unclaimed') $('open-'+id)?.focus();
+  else document.querySelector('[data-scope="'+scope+'"]')?.focus();
+ }));
+ const i=incidents.find(x=>x.id===selectedId);
+ if (!i) $('detail').innerHTML='<div class="detail-empty">Select an incident from the queue. Clear filters to see all active incidents.</div>';
+ else {
+ const owner=ownerOf(i);
+ const action=!owner?'<button class="primary" id="detail-claim">Claim in this demo</button>':
+ localClaims[i.id]?'<button class="secondary" id="detail-release">Release my demo claim</button>':
+ owner==='You'?'<p><strong>Already assigned to you in the synthetic snapshot.</strong></p>':
+ '<p><strong>Assigned to '+escapeHtml(owner)+'.</strong> Ownership changes for another operator are unavailable in this demo.</p>';
+ $('detail').innerHTML='<div class="detail-layout"><div class="detail-top"><div class="detail-eyebrow"><span class="severity '+i.severity.toLowerCase()+'">'+i.severity+' · '+({P1:'Critical',P2:'High',P3:'Moderate'}[i.severity])+'</span><span class="incident-id">'+i.id+'</span></div><h2 id="detail-heading" tabindex="-1">'+escapeHtml(i.title)+'</h2><p class="detail-service">'+escapeHtml(i.service)+' · '+i.region+'</p></div>'+
+ '<div class="detail-section"><dl><div><dt>Owner</dt><dd>'+escapeHtml(owner||'Unclaimed')+'</dd></div><div><dt>Status</dt><dd>'+i.status+'</dd></div><div><dt>Opened</dt><dd>'+ageOf(i.age)+' before snapshot</dd></div><div><dt>Source</dt><dd>Synthetic record</dd></div></dl></div>'+
+ '<div class="detail-section"><h3>Customer impact</h3><p>'+i.impactText+'</p></div>'+
+ '<div class="detail-section"><h3>Evidence · synthetic snapshot</h3><ol class="evidence">'+i.evidence.map(e=>'<li><time>'+e[0]+' UTC</time>'+e[1]+'</li>').join('')+'</ol></div>'+
+ '<div class="detail-section"><h3>Suggested first check</h3><p>'+i.firstCheck+'</p><p class="action-boundary">Authored demo guidance. No analysis or system check has been executed.</p></div>'+
+ '<div class="detail-actions">'+action+'<p class="action-boundary">Claims update demo ownership '+(storageAvailable?'on this browser.':'for this open page only; browser storage is unavailable.')+' They do not page anyone or change a production incident.</p><button class="text-button back" id="back-to-queue">Back to selected queue row</button></div></div>';
+ $('detail-claim')?.addEventListener('click',()=>{const id=i.id;claim(id); (selectedId===id ? $('detail-release') : $('detail-heading') || $('empty-clear'))?.focus();});
+ $('detail-release')?.addEventListener('click',()=>{const id=i.id;release(id);(selectedId===id ? $('detail-claim') : $('detail-heading') || $('empty-clear'))?.focus();});
+ $('back-to-queue')?.addEventListener('click',()=>$('open-'+i.id)?.focus());
+ }
+ $('storage-label').textContent=storageAvailable?'Demo claims are saved on this browser. Synthetic evidence does not refresh.':'Browser storage is unavailable. Demo claims last for this open page only.';
+}
+[...new Set(incidents.map(i=>i.service))].sort().forEach(service=>{const option=document.createElement('option');option.value=service;option.textContent=service;$('service').append(option);});
+document.querySelectorAll('[data-scope]').forEach(b=>b.addEventListener('click',()=>{scope=b.dataset.scope;render();}));
+$('search').addEventListener('input',render);
+$('severity').addEventListener('change',render);
+$('service').addEventListener('change',render);
+$('clear-filters').addEventListener('click',clearFilters);
+$('empty-clear').addEventListener('click',()=>{clearFilters();$('search').focus();});
+$('undo-claim').addEventListener('click',()=>{if(lastClaim)release(lastClaim);document.querySelector('[data-scope="'+scope+'"]')?.focus();});
+$('reset-demo').addEventListener('click',()=>{
+ if (!Object.keys(localClaims).length) {announce('There are no local demo claims to reset.');return;}
+ if (confirm('Reset your local demo claims? Synthetic snapshot assignments stay in place.')) {storeClaims({});lastClaim=null;render();announce('Local demo claims reset. Synthetic snapshot assignments restored.');}
+});
+document.addEventListener('keydown',event=>{
+ const field = ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);
+ if(event.key==='/'&&!field&&!event.ctrlKey&&!event.metaKey&&!event.altKey){event.preventDefault();$('search').focus();}
+ if(event.key==='Escape'&&document.activeElement===$('search')){$('search').value='';render();}
+});
+render();
+</script>
+</body>
+</html>

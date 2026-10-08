@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality gate — synthetic demo</title>
+<style>
+:root{color-scheme:light;--ink:#20252a;--muted:#4c555e;--line:#c9ced3;--surface:#f6f7f8;--warn:#fff2cf}
+*{box-sizing:border-box}
+body{font:16px/1.5 system-ui,sans-serif;color:var(--ink);max-width:860px;margin:32px auto;padding:20px;background:#fff}
+h1{margin:0 0 12px}h2{font-size:1.35rem;margin:0 0 12px}h3{font-size:1.05rem}
+p{margin:8px 0 16px}
+.notice{padding:12px 16px;background:var(--warn);border-left:4px solid #8b6500}
+.controls{padding:20px;background:var(--surface);border:1px solid var(--line);margin:24px 0}
+label{display:block;font-weight:650;margin-bottom:6px}
+.control-row{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+button,input{font:inherit;min-height:44px;padding:8px 12px;border:1px solid #737e89;border-radius:4px}
+input{width:160px;max-width:100%;background:#fff;color:var(--ink)}
+button{color:#fff;background:#234f72;cursor:pointer}
+button:hover{background:#183c58}
+:focus-visible{outline:3px solid #2b6d9b;outline-offset:3px}
+.help{color:var(--muted);margin-top:12px;margin-bottom:0}
+.error{color:#9f1e19;font-weight:600;margin:8px 0 0}
+#result-status{padding:12px 16px;border:1px solid var(--line);background:var(--surface);margin:0 0 12px}
+#result-status[data-state="previous"]{background:var(--warn);border-color:#8b6500}
+#report{border:1px solid var(--line);padding:20px}
+#report h2{scroll-margin-top:16px}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;margin:16px 0;text-align:left}
+caption{text-align:left;font-weight:600;padding-bottom:8px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line)}
+th{background:var(--surface)}
+td:last-child,th:last-child{text-align:right}
+dl{display:grid;grid-template-columns:minmax(100px,150px) minmax(0,1fr);gap:6px 16px;margin:20px 0 0}
+dt{font-weight:600}dd{margin:0;overflow-wrap:anywhere}
+section.supporting{margin-top:28px}
+details{border:1px solid var(--line);margin:10px 0}
+summary{padding:14px 16px;cursor:pointer;font-weight:600}
+.detail-body{padding:0 16px 16px}
+#history-list .detail-body>p:first-child{font-weight:600}
+[hidden]{display:none!important}
+@media(max-width:480px){body{margin:8px auto;padding:16px}.controls,#report{padding:16px}dl{grid-template-columns:1fr;gap:2px}dd{margin-bottom:10px}.control-row{gap:10px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Quality gate</h1>
+<p class="notice">Local demo · Synthetic records. No production processing.</p>
+<p>Choose a minimum score, run the fixed local rule, and inspect the records that pass.</p>
+</header>
+
+<form id="controls" class="controls" novalidate>
+<label for="threshold">Minimum score (0–100)</label>
+<div class="control-row">
+<input id="threshold" name="threshold" type="number" min="0" max="100" step="any" required value="20" aria-describedby="threshold-help threshold-error">
+<button id="run" type="submit">Run local demo</button>
+</div>
+<p id="threshold-help" class="help">Scores at or above the applied minimum pass. Editing this value does not rerun the report.</p>
+<p id="threshold-error" class="error" hidden></p>
+</form>
+
+<p id="result-status" role="status" aria-live="polite" aria-atomic="true"></p>
+<section id="report" aria-labelledby="report-title"></section>
+
+<section class="supporting" aria-labelledby="history-title">
+<h2 id="history-title">Earlier runs</h2>
+<p>Completed runs are kept here for comparison. This history stays in this tab until the page is closed or reloaded.</p>
+<div id="history-list"></div>
+</section>
+
+<section class="supporting" aria-labelledby="input-title">
+<h2 id="input-title">Source and rule</h2>
+<p>All runs use these five fixed synthetic records. A record passes when its score is greater than or equal to the applied minimum.</p>
+<details>
+<summary>Inspect synthetic input records</summary>
+<div id="source-records" class="detail-body"></div>
+</details>
+</section>
+
+<script>
+'use strict';
+const records=Object.freeze([
+ {id:'DEMO-A',score:99},{id:'DEMO-B',score:50},{id:'DEMO-C',score:25},
+ {id:'DEMO-D',score:15},{id:'DEMO-E',score:7}
+].map(Object.freeze));
+const input=document.getElementById('threshold');
+const error=document.getElementById('threshold-error');
+const reportArea=document.getElementById('report');
+const status=document.getElementById('result-status');
+const historyArea=document.getElementById('history-list');
+let nextRun=2;
+function makeReport(id,threshold,created){
+ return Object.freeze({
+  id,threshold,created,
+  records:Object.freeze(records.filter(record=>record.score>=threshold).map(record=>Object.freeze({...record})))
+ });
+}
+const runs=[makeReport('DEMO-RUN-1',20,'Fixed synthetic initial run')];
+function element(tag,text,className){
+ const node=document.createElement(tag);
+ if(text!==undefined)node.textContent=text;
+ if(className)node.className=className;
+ return node;
+}
+function addTable(parent,rows,captionText){
+ const wrap=element('div',undefined,'table-wrap');
+ const table=element('table');
+ table.append(element('caption',captionText));
+ const head=element('thead');
+ const header=element('tr');
+ ['ID','Score'].forEach(label=>{
+  const cell=element('th',label);cell.scope='col';header.append(cell);
+ });
+ head.append(header);table.append(head);
+ const body=element('tbody');
+ rows.forEach(record=>{
+  const row=element('tr');
+  row.append(element('td',record.id),element('td',String(record.score)));
+  body.append(row);
+ });
+ table.append(body);wrap.append(table);parent.append(wrap);
+}
+function addProvenance(parent,report){
+ const provenance=element('dl');
+ const values=[
+  ['Run',report.id],['Applied minimum',String(report.threshold)],
+  ['Created',report.created],['Rule','Score ≥ applied minimum'],
+  ['Source','Five fixed synthetic records in “Source and rule”'],
+  ['Mode','Completed local filtering; no production processing']
+ ];
+ values.forEach(([term,value])=>provenance.append(element('dt',term),element('dd',value)));
+ parent.append(provenance);
+}
+function addResultContent(parent,report,captionText){
+ parent.append(element('p',report.records.length+' of '+records.length+' synthetic records passed with minimum '+report.threshold+'.'));
+ if(report.records.length){
+  addTable(parent,report.records,captionText);
+ }else{
+  parent.append(element('p','No synthetic records meet minimum '+report.threshold+'.'));
+ }
+ addProvenance(parent,report);
+}
+function draft(){
+ const raw=input.value.trim();
+ const value=input.valueAsNumber;
+ if(raw==='' || !Number.isFinite(value))return {valid:false,message:'Enter a minimum score from 0 to 100.'};
+ if(value<0 || value>100)return {valid:false,message:'Use a minimum score from 0 to 100.'};
+ return {valid:true,value};
+}
+function updateFreshness(){
+ const current=runs[runs.length-1];
+ const pending=draft();
+ error.hidden=pending.valid;
+ error.textContent=pending.valid?'':pending.message;
+ input.setAttribute('aria-invalid',String(!pending.valid));
+ const matches=pending.valid && pending.value===current.threshold;
+ document.getElementById('report-title').textContent=matches?'Current result':'Previous result — rerun needed';
+ reportArea.dataset.state=matches?'current':'previous';
+ status.dataset.state=matches?'current':'previous';
+ const message=matches
+  ? 'Current result: the displayed run used minimum '+current.threshold+', matching the input.'
+  : pending.valid
+   ? 'Previous result: this run used minimum '+current.threshold+'. The input is now '+pending.value+'. Run the local demo to create a result for that minimum.'
+   : 'Previous result: this run used minimum '+current.threshold+'. Enter a valid minimum, then run the local demo.';
+ if(status.textContent!==message)status.textContent=message;
+}
+function renderLatest(){
+ const current=runs[runs.length-1];
+ reportArea.replaceChildren();
+ reportArea.dataset.runId=current.id;
+ const heading=element('h2','Current result');heading.id='report-title';reportArea.append(heading);
+ addResultContent(reportArea,current,'Passing synthetic records');
+ updateFreshness();
+}
+function renderHistory(){
+ historyArea.replaceChildren();
+ const earlier=runs.slice(0,-1);
+ if(!earlier.length){historyArea.append(element('p','No earlier runs in this tab.'));return;}
+ earlier.forEach(report=>{
+  const item=element('details');item.dataset.runId=report.id;
+  item.append(element('summary',report.id+' · minimum '+report.threshold+' · '+report.records.length+' of '+records.length+' passed'));
+  const body=element('div',undefined,'detail-body');
+  body.append(element('p','Historical result — this completed run keeps its original applied minimum.'));
+  addResultContent(body,report,'Historical passing synthetic records');
+  item.append(body);historyArea.append(item);
+ });
+}
+input.addEventListener('input',updateFreshness);
+input.addEventListener('change',updateFreshness);
+document.getElementById('controls').addEventListener('submit',event=>{
+ event.preventDefault();
+ const pending=draft();
+ if(!pending.valid){updateFreshness();input.focus();return;}
+ const created='Local demo run · '+new Date().toISOString();
+ runs.push(makeReport('DEMO-RUN-'+nextRun++,pending.value,created));
+ renderLatest();renderHistory();
+});
+addTable(document.getElementById('source-records'),records,'All synthetic input records');
+renderLatest();renderHistory();
+</script>
+</body>
+</html>
