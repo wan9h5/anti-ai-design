@@ -12,6 +12,7 @@ For a demo, verify that simulated data and execution are visibly labeled where u
 
 Load [accessibility](../references/accessibility.md) for precise criteria and exceptions. Use automated checks as diagnostics, then manually inspect the changed task:
 - keyboard access, focus visibility/order, modal behavior, and escape/recovery; after filtering, claiming, deleting, or rerendering a selected item, verify the actual active element remains a useful existing target, including no-result states;
+- when comparison tables or charts need horizontal scrolling, test reaching the scroll container with Tab and scrolling it with arrow keys; reachable row buttons alone do not prove keyboard access to all comparison content;
 - names, roles, states, labels, error association, and status announcements;
 - text/background and meaningful non-text contrast, with actual colors;
 - color-independent state interpretation;
@@ -24,6 +25,8 @@ Report browser, viewport/zoom, relevant assistive technology, method, and result
 ## Visualization and performance
 
 For charts, check the question, population/time range/units, source/recency, aggregation/denominators, scales, missing data, limits, and an equivalent text/data representation. Test filter effects and tooltip alternatives.
+
+Inspect the rendered chart, not only its data and accessible description. For stroke-only SVG axes, grids and lines, explicitly suppress fill and check that open paths do not produce unintended filled areas that change the apparent encoding.
 
 For performance changes, distinguish a reproducible lab diagnostic from field experience. Record device/network/test method and relevant loading, input responsiveness, or stability measures. Never infer Web Vitals from a still image, substitute a Lighthouse score for field evidence, or attribute a slowdown to an effect without profiling. See [performance and integrity](../references/performance-integrity.md).
 
