@@ -1,5 +1,7 @@
 # Anti-AI Design
 
+Latest evaluation: all 12 scenarios were executed on 2026-10-09: 4 pass, 8 partial; 33 jsdom checks pass. Artifact browser/visual/native-input checks remain unperformed. [Full record](tests/runs/2026-10-09/report.md).
+
 A general interface design constraint and review framework that helps AI reduce formulaic, hollow, and template-driven output while fitting real users, real tasks, and development constraints.
 
 Delivered as an agent skill for creating, reviewing, and refactoring interfaces, it combines deliberate visual design, usability, and feasible implementation.

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reconciliation — expert comparison</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #202d38; background: #f6f7f8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 1120px; padding: 28px 24px; margin: 0 auto; }
+    h1 { font-size: 24px; line-height: 1.3; margin: 0 0 6px; letter-spacing: -.4px; }
+    p { margin: 0; line-height: 1.5; }
+    .context { color: #465563; font-size: 14px; }
+    .table-note { margin: 22px 0 8px; font-size: 13px; color: #465563; }
+    .table-region { overflow: auto; border: 1px solid #bec8d0; background: white; }
+    table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 780px; font-size: 14px; }
+    caption { text-align: left; padding: 10px 12px; font-size: 13px; font-weight: 600; border-bottom: 1px solid #d2d9df; }
+    th, td { padding: 7px 12px; text-align: left; white-space: nowrap; border-bottom: 1px solid #d2d9df; vertical-align: middle; }
+    thead th { font-size: 12px; background: #eaf0f4; font-weight: 650; color: #344554; }
+    tbody th { font-family: ui-monospace, monospace; font-weight: 600; }
+    tbody tr:last-child > * { border-bottom: 0; }
+    tbody tr:hover > *, tbody tr:focus-within > * { background: #f0f5f8; }
+    .account { position: sticky; left: 0; background: white; border-right: 1px solid #d2d9df; z-index: 1; }
+    thead .account { background: #eaf0f4; }
+    .number { text-align: right; font-variant-numeric: tabular-nums; font-family: ui-monospace, monospace; }
+    .delta { font-weight: 650; color: #7a3708; }
+    .status { display: inline-block; padding: 2px 7px; border: 1px solid #abb9c4; border-radius: 3px; font-size: 12px; font-weight: 600; }
+    .review { color: #713500; background: #fff3df; border-color: #c99c57; }
+    .matched, .resolved { color: #20533e; background: #edf6ef; border-color: #81a592; }
+    button { font: inherit; font-size: 13px; cursor: pointer; min-height: 30px; padding: 4px 10px; border: 1px solid #597080; border-radius: 3px; color: #203746; background: #fff; }
+    button:hover { background: #e8f0f5; }
+    button.primary { color: white; background: #254e67; border-color: #254e67; }
+    button.primary:hover { background: #173a51; }
+    :focus-visible { outline: 3px solid #00639a; outline-offset: 3px; }
+    .instructions { margin-top: 10px; font-size: 13px; color: #465563; max-width: 80ch; }
+    .feedback { margin-top: 12px; min-height: 1.5em; font-size: 14px; font-weight: 600; }
+    .invoice { border-left: 3px solid #254e67; margin-top: 16px; padding: 12px 16px; background: #fff; }
+    .invoice[hidden] { display: none; }
+    .invoice h2 { margin: 0 0 8px; font-size: 17px; }
+    .invoice dl { display: flex; flex-wrap: wrap; gap: 12px 32px; margin: 0 0 10px; }
+    .invoice dt { color: #465563; font-size: 12px; }
+    .invoice dd { margin: 3px 0 0; font-size: 14px; font-weight: 600; }
+    .invoice p { margin: 10px 0; font-size: 13px; color: #465563; }
+    @media (max-width: 600px) { main { padding: 20px 12px; } h1 { font-size: 22px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Reconciliation</h1>
+    <p class="context">Synthetic local data · 2 accounts · Changes reset on reload</p>
+    <p id="table-help" class="table-note">Compare amounts side by side. Delta = received − expected. All amounts are USD.</p>
+    <div class="table-region" role="region" aria-label="Reconciliation comparison" aria-describedby="table-help scroll-help" tabindex="0">
+      <table>
+        <caption>Account reconciliation</caption>
+        <thead><tr><th scope="col" class="account">Account</th><th scope="col" class="number">Expected USD</th><th scope="col" class="number">Received USD</th><th scope="col" class="number">Delta USD</th><th scope="col">Owner</th><th scope="col">Status</th><th scope="col">Action</th></tr></thead>
+        <tbody>
+          <tr><th scope="row" class="account">AC-01</th><td class="number">1,200.00</td><td class="number">1,180.00</td><td class="number delta">−20.00</td><td>Ada</td><td><span id="ac01-status" class="status review">Review</span></td><td><button id="resolve" class="primary" aria-label="Resolve AC-01" aria-describedby="resolve-help">Resolve</button></td></tr>
+          <tr><th scope="row" class="account">AC-02</th><td class="number">800.00</td><td class="number">800.00</td><td class="number">0.00</td><td>Lin</td><td><span class="status matched">Matched</span></td><td><button id="inspect" aria-label="Inspect invoice for AC-02" aria-expanded="false" aria-controls="invoice">Inspect invoice</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="instructions" id="resolve-help">Resolve marks AC-01’s review complete in this demo; it does not change the amounts or settle the −20.00 USD difference. Undo remains available.</p>
+    <p class="instructions" id="scroll-help">On narrow screens, scroll within the table to reach all columns. Keyboard: Tab to the table, then use Left/Right to scroll; Tab to each action.</p>
+    <p class="feedback" role="status" aria-live="polite" aria-atomic="true" id="feedback"></p>
+    <section class="invoice" id="invoice" aria-labelledby="invoice-title" hidden>
+      <h2 id="invoice-title">Invoice reference · AC-02</h2>
+      <dl><div><dt>Invoice</dt><dd>INV-02</dd></div><div><dt>Expected USD</dt><dd>800.00</dd></div><div><dt>Received USD</dt><dd>800.00</dd></div><div><dt>Assigned reviewer</dt><dd>Lin</dd></div></dl>
+      <p>Synthetic invoice reference only. No invoice document or external system is connected.</p>
+      <button id="close-invoice">Close invoice details</button>
+    </section>
+  </main>
+  <script>
+    const resolveButton = document.getElementById('resolve');
+    const status = document.getElementById('ac01-status');
+    const feedback = document.getElementById('feedback');
+    const inspectButton = document.getElementById('inspect');
+    const invoice = document.getElementById('invoice');
+    const closeInvoice = document.getElementById('close-invoice');
+    let resolved = false;
+    resolveButton.addEventListener('click', () => {
+      resolved = !resolved;
+      status.textContent = resolved ? 'Resolved' : 'Review';
+      status.className = 'status ' + (resolved ? 'resolved' : 'review');
+      resolveButton.textContent = resolved ? 'Undo resolve' : 'Resolve';
+      resolveButton.setAttribute('aria-label', resolved ? 'Undo resolve for AC-01' : 'Resolve AC-01');
+      resolveButton.classList.toggle('primary', !resolved);
+      feedback.textContent = resolved ? 'AC-01 marked resolved locally. Delta remains −20.00 USD. Undo is available.' : 'Resolution undone. AC-01 returned to Review.';
+    });
+    function closeDetails() {
+      invoice.hidden = true;
+      inspectButton.setAttribute('aria-expanded', 'false');
+      inspectButton.focus();
+    }
+    inspectButton.addEventListener('click', () => {
+      if (!invoice.hidden) { closeDetails(); return; }
+      invoice.hidden = false;
+      inspectButton.setAttribute('aria-expanded', 'true');
+      closeInvoice.focus();
+    });
+    closeInvoice.addEventListener('click', closeDetails);
+    invoice.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { event.preventDefault(); closeDetails(); }
+    });
+  </script>
+</body>
+</html>
