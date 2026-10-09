@@ -1,0 +1,34 @@
+- main:
+  - paragraph: Synthetic fixture · Local calculation
+  - heading "Threshold report" [level=1]
+  - paragraph: Count values strictly above a threshold. Edit the threshold, then run the calculation to update the report.
+  - region "Calculate threshold report":
+    - text: Threshold
+    - spinbutton "Threshold": "10"
+    - button "Run calculation"
+    - paragraph:
+      - text: "Values:"
+      - code: "[5, 12, 20]"
+      - text: . A value equal to the threshold is excluded.
+    - region "Latest report":
+      - status: Current result · Matches threshold 10
+      - paragraph:
+        - strong: 2 of 3
+        - text: values above threshold 10
+      - paragraph: "Above threshold: 12, 20."
+      - paragraph: Saved run DEMO-01 · Calculated at threshold 10
+  - region "Run history":
+    - heading "Run history" [level=2]
+    - table "The original saved run stays available. New runs are kept for this page session only; reloading restores DEMO-01.":
+      - caption: The original saved run stays available. New runs are kept for this page session only; reloading restores DEMO-01.
+      - rowgroup:
+        - row "Run Threshold used Count above":
+          - columnheader "Run"
+          - columnheader "Threshold used"
+          - columnheader "Count above"
+      - rowgroup:
+        - row "DEMO-01 (saved) 10 2 of 3":
+          - rowheader "DEMO-01 (saved)"
+          - cell "10"
+          - cell "2 of 3"
+  - paragraph: "Source: synthetic fixture. Every run uses the same three values and computes in your browser. No data is sent or saved to a service."

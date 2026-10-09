@@ -1,0 +1,70 @@
+- banner:
+  - text: Incident desk On-call workspace Demo operator
+  - strong: You
+- main:
+  - heading "Triage the open queue" [level=1]
+  - paragraph: Find incidents that need an owner. Compare severity and age, then claim the next response.
+  - strong: LOCAL DEMO
+  - text: Synthetic incidents. Claims affect this page only; no production service is connected.
+  - group "Queue totals":
+    - paragraph:
+      - strong: "3"
+      - text: open incidents
+    - paragraph:
+      - strong: "2"
+      - text: critical
+    - paragraph:
+      - strong: "1"
+      - text: needs an owner
+  - region "Filter incidents":
+    - text: Severity
+    - combobox "Severity":
+      - option "All severities" [selected]
+      - option "Critical"
+      - option "Warning"
+    - text: Owner
+    - combobox "Owner":
+      - option "All owners" [selected]
+      - option "Unowned"
+      - option "You"
+      - option "Ada"
+      - option "Lin"
+    - button "Clear filters"
+  - region "Open incidents (3)":
+    - heading "Open incidents (3)" [level=2]
+    - paragraph: Critical first · unowned first · oldest first
+    - paragraph: On narrow screens, Tab to the incident comparison, then use Left/Right to scroll. Tab again to reach each available action.
+    - region "Incident comparison":
+      - table "Synthetic open incidents, sorted by severity, ownership and age":
+        - caption: Synthetic open incidents, sorted by severity, ownership and age
+        - rowgroup:
+          - row "Incident Severity Owner Age Local action":
+            - columnheader "Incident"
+            - columnheader "Severity"
+            - columnheader "Owner"
+            - columnheader "Age"
+            - columnheader "Local action"
+        - rowgroup:
+          - row "INC-01 API unavailable Critical Unowned 12 min Claim INC-01 locally":
+            - cell "INC-01 API unavailable"
+            - cell "Critical"
+            - cell "Unowned"
+            - cell "12 min"
+            - cell "Claim INC-01 locally":
+              - button "Claim INC-01 locally": Claim
+          - row "INC-03 Storage errors Critical Lin 5 min Assigned":
+            - cell "INC-03 Storage errors"
+            - cell "Critical"
+            - cell "Lin"
+            - cell "5 min"
+            - cell "Assigned"
+          - row "INC-02 Queue delay Warning Ada 30 min Assigned":
+            - cell "INC-02 Queue delay"
+            - cell "Warning"
+            - cell "Ada"
+            - cell "30 min"
+            - cell "Assigned"
+    - status: 3 incidents shown. 1 unowned incident is ready to claim.
+    - button "Reset sample"
+    - paragraph: Claim assigns an unowned incident to You. Release returns your claim to Unowned. Existing owners cannot be reassigned here. Ages are fixed sample values.
+  - text: Sample data · no live updates Changes last until reset or page reload

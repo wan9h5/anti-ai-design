@@ -1,0 +1,45 @@
+- link "Skip to event details":
+  - /url: "#main"
+- banner: STUDIO HALL An evening of printmaking
+- main:
+  - region "Night of Print.":
+    - text: Exhibition + workshop 14 November 2026
+    - heading "Night of Print." [level=1]:
+      - text: Night of
+      - emphasis: Print.
+    - paragraph: An evening to look closely, get ink on your hands, and spend time with print.
+    - link "Try free registration":
+      - /url: "#register"
+    - figure "An original graphic for this sample event":
+      - img "Abstract print of a coral circle over dark hand-like ridges on cream paper"
+      - text: An original graphic for this sample event
+    - term: When
+    - definition: Saturday, 14 November18:00–21:00 · 2026
+    - term: Where
+    - definition: Studio Hall
+    - term: Entry
+    - definition: "Free registrationCapacity: 30 people"
+  - region "From the wall to the worktable.":
+    - paragraph: The evening
+    - heading "From the wall to the worktable." [level=2]
+    - paragraph: Night of Print brings a printmaking exhibition and a workshop together at Studio Hall. Explore the exhibition, then take part in making a print.
+    - heading "Printmaking exhibition" [level=3]
+    - paragraph: Spend time with the works on display.
+    - heading "Printmaking workshop" [level=3]
+    - paragraph: Move from looking at prints to taking part in the process.
+  - region "Join the evening.":
+    - paragraph: Free · capacity 30
+    - heading "Join the evening." [level=2]
+    - paragraph: A sample registration for one person.
+    - paragraph:
+      - strong: Local prototype.
+      - text: This is a fictional event. Your details stay on this page until you reload or clear them. No place is reserved, no email is sent, and availability is not checked.
+    - paragraph: Both fields are required. Use sample details.
+    - text: Full name
+    - textbox "Full name"
+    - text: Email address
+    - textbox "Email address"
+    - paragraph: For example, alex@example.com
+    - button "Preview my registration"
+    - status
+- contentinfo: Studio Hall · Night of Print Synthetic event · registration prototype

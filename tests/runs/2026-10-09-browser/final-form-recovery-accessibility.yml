@@ -1,0 +1,17 @@
+- main:
+  - paragraph: Local demo
+  - heading "Submit your details" [level=1]
+  - paragraph: Try validation and service recovery. This simulation sends no data to a server.
+  - text: Name (optional)
+  - textbox "Name (optional)"
+  - text: Email (required)
+  - textbox "Email (required)"
+  - paragraph: Use an address such as name@example.com.
+  - text: Service mode (simulation)
+  - combobox "Service mode (simulation)":
+    - option "Available" [selected]
+    - option "Outage"
+  - paragraph: Choose Outage to test a service failure. Switch to Available to recover.
+  - button "Submit local demo"
+  - status
+  - paragraph: Your entries stay on this page after errors or success. They are not saved across reloads.

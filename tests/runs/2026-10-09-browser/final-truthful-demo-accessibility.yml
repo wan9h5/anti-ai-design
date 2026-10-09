@@ -1,0 +1,18 @@
+- main:
+  - text: Sample notebook / prototype
+  - heading "A first look at your sample" [level=1]
+  - paragraph: Select a synthetic sample, then preview the analysis handoff. Today, this demo computes a mean and range in your browser.
+  - region "Choose the input":
+    - heading "Choose the input" [level=2]
+    - text: Synthetic sample
+    - combobox "Synthetic sample":
+      - option "SYN-01 · 2, 4, 6" [selected]
+      - option "SYN-02 · 3, 3, 3"
+    - paragraph: Three values per sample. No units or scientific interpretation are supplied.
+    - button "AI analysis · preview"
+    - paragraph: "Preview only: no AI model or backend is connected. This button runs local arithmetic and reveals the proposed future steps below."
+  - region "Sample summary":
+    - text: Local fixture · no AI execution
+    - heading "Sample summary" [level=2]
+    - status: Select a sample and run the preview to see its statistics.
+  - text: No data leaves this page. Results stay in memory and reset when you reload.

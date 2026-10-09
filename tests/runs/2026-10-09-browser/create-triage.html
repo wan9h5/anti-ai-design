@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incident desk · Local demo</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#202a31;background:#f3f4f1;font-size:16px;line-height:1.45;--muted:#52616a;--line:#c8ceca;--ink:#202a31;--red:#a52b25}
+*{box-sizing:border-box}body{margin:0}button,select{font:inherit}button,select{min-height:42px;border:1px solid #748078;border-radius:3px}button{padding:8px 15px;background:#fff;color:var(--ink);cursor:pointer;font-weight:600}button:hover{background:#e9ede9}button:focus-visible,select:focus-visible,a:focus-visible,.table-wrap:focus-visible{outline:3px solid #1a6488;outline-offset:3px}header{background:#202a31;color:#fff;padding:20px 36px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-size:19px;font-weight:700;letter-spacing:-.3px}.brand span{color:#b9c6cd;font-weight:400;font-size:14px;margin-left:16px}.operator{font-size:14px;color:#dbe3e6}.operator strong{color:#fff}main{max-width:1280px;margin:auto;padding:38px 36px 50px}.heading{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}h1{font-size:32px;line-height:1.15;letter-spacing:-1px;margin:0 0 12px}.sub{margin:0;color:var(--muted);max-width:640px}.demo{background:#e7ede8;border-left:4px solid #52685c;padding:12px 16px;font-size:14px;margin:25px 0 30px;color:#33473a}.demo strong{margin-right:10px}.summary{display:flex;gap:36px;border-bottom:1px solid var(--line);padding-bottom:23px;margin-bottom:24px}.summary p{margin:0;display:flex;gap:9px;align-items:baseline}.summary strong{font-size:28px;letter-spacing:-.8px}.summary span{font-size:14px;color:var(--muted)}.summary .attention{color:var(--red)}.filters{display:flex;align-items:end;gap:18px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:600}select{padding:8px 36px 8px 12px;background:#fff;color:var(--ink);min-width:174px}.filters .clear{background:transparent;border-color:transparent;text-decoration:underline;font-size:14px}.queue-heading{display:flex;justify-content:space-between;align-items:baseline;margin-top:28px;margin-bottom:12px;gap:15px}h2{font-size:18px;margin:0}.sort-note{font-size:13px;color:var(--muted);margin:0}.table-wrap{overflow:auto;border:1px solid var(--line);background:#fff}table{width:100%;border-collapse:collapse;text-align:left;min-width:730px}th{background:#e9ede9;padding:13px 18px;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#45554d;font-weight:700}td{padding:22px 18px;border-top:1px solid #dce1dc;vertical-align:middle}.incident{min-width:245px}.id{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12px;color:var(--muted);display:block;margin-bottom:5px}.title{font-size:16px;font-weight:600}.severity{white-space:nowrap;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px}.severity:before{content:"";width:8px;height:8px;background:currentColor;border-radius:50%}.critical{color:#a52b25}.warning{color:#795900}.unowned{color:#a52b25;font-weight:700}.age{font-variant-numeric:tabular-nums;white-space:nowrap;font-size:15px}.claim{background:#202a31;color:#fff;border-color:#202a31;min-width:106px}.claim:hover{background:#394b55}.action-cell{width:140px}.owned{font-size:13px;color:var(--muted)}.release{font-size:14px;min-width:106px}.notice{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:43px}.status{font-size:14px;margin:0;color:#33473a}.scope{color:var(--muted);font-size:13px;margin-top:23px}.empty{text-align:center;padding:40px 18px}.empty strong{display:block;font-size:18px;margin-bottom:7px}.empty p{color:var(--muted);margin:0 0 18px}.reset{font-size:13px;background:transparent;white-space:nowrap}footer{margin-top:45px;border-top:1px solid var(--line);padding-top:15px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px}
+@media(max-width:700px){header{padding:18px 20px;align-items:flex-start}.brand span{display:block;margin:3px 0 0}.operator{max-width:115px;text-align:right}main{padding:28px 20px}.summary{gap:20px;flex-wrap:wrap}.summary p{flex-direction:column;gap:0}.queue-heading{flex-direction:column;gap:5px}.filters{gap:12px}.field{flex:1 1 15em;min-width:0}select{width:100%;min-width:0}.notice{align-items:flex-start;flex-direction:column}footer{flex-direction:column;gap:5px}h1{font-size:28px}}
+</style>
+</head>
+<body>
+<header><div class="brand">Incident desk<span>On-call workspace</span></div><div class="operator">Demo operator<br><strong>You</strong></div></header>
+<main>
+<div class="heading"><div><h1>Triage the open queue</h1><p class="sub">Find incidents that need an owner. Compare severity and age, then claim the next response.</p></div></div>
+<div class="demo"><strong>LOCAL DEMO</strong> Synthetic incidents. Claims affect this page only; no production service is connected.</div>
+<div class="summary" role="group" aria-label="Queue totals"><p><strong id="total-count">3</strong><span>open incidents</span></p><p><strong class="attention" id="critical-count">2</strong><span>critical</span></p><p><strong class="attention" id="unowned-count">1</strong><span>needs an owner</span></p></div>
+<section aria-label="Filter incidents">
+<div class="filters"><label class="field">Severity<select id="severity"><option value="all">All severities</option><option value="critical">Critical</option><option value="warning">Warning</option></select></label><label class="field">Owner<select id="owner"><option value="all">All owners</option><option value="unowned">Unowned</option><option value="You">You</option><option value="Ada">Ada</option><option value="Lin">Lin</option></select></label><button class="clear" id="clear">Clear filters</button></div>
+</section>
+<section aria-labelledby="queue-title">
+<div class="queue-heading"><h2 id="queue-title">Open incidents <span id="shown-count">(3)</span></h2><p class="sort-note">Critical first · unowned first · oldest first</p></div>
+<p id="table-scroll-help" class="scope">On narrow screens, Tab to the incident comparison, then use Left/Right to scroll. Tab again to reach each available action.</p>
+<div class="table-wrap" role="region" aria-label="Incident comparison" aria-describedby="table-scroll-help" tabindex="0"><table><caption style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Synthetic open incidents, sorted by severity, ownership and age</caption><thead><tr><th scope="col">Incident</th><th scope="col">Severity</th><th scope="col">Owner</th><th scope="col">Age</th><th scope="col">Local action</th></tr></thead><tbody id="incidents"></tbody></table></div>
+<div class="notice"><p class="status" id="status" role="status" aria-live="polite">3 incidents shown. 1 unowned incident is ready to claim.</p><button class="reset" id="reset">Reset sample</button></div>
+<p class="scope">Claim assigns an unowned incident to You. Release returns your claim to Unowned. Existing owners cannot be reassigned here. Ages are fixed sample values.</p>
+</section>
+<footer><span>Sample data · no live updates</span><span>Changes last until reset or page reload</span></footer>
+</main>
+<script>
+'use strict';
+const sample=[{id:'INC-01',severity:'critical',owner:null,age:12,title:'API unavailable'},{id:'INC-02',severity:'warning',owner:'Ada',age:30,title:'Queue delay'},{id:'INC-03',severity:'critical',owner:'Lin',age:5,title:'Storage errors'}];
+let incidents=sample.map(item=>({...item}));
+const severity=document.getElementById('severity'),owner=document.getElementById('owner'),tbody=document.getElementById('incidents'),status=document.getElementById('status');
+function filtered(){return incidents.filter(item=>(severity.value==='all'||item.severity===severity.value)&&(owner.value==='all'||(owner.value==='unowned'?item.owner===null:item.owner===owner.value))).sort((a,b)=>(a.severity==='critical'?0:1)-(b.severity==='critical'?0:1)||(a.owner?1:0)-(b.owner?1:0)||b.age-a.age);}
+function render(message){
+ const visible=filtered();
+ document.getElementById('total-count').textContent=incidents.length;
+ document.getElementById('critical-count').textContent=incidents.filter(item=>item.severity==='critical').length;
+ document.getElementById('unowned-count').textContent=incidents.filter(item=>!item.owner).length;
+ document.getElementById('shown-count').textContent='('+visible.length+')';
+ tbody.innerHTML=visible.map(item=>`<tr><td class="incident"><span class="id">${item.id}</span><span class="title">${item.title}</span></td><td><span class="severity ${item.severity}">${item.severity==='critical'?'Critical':'Warning'}</span></td><td class="${!item.owner?'unowned':''}">${item.owner||'Unowned'}</td><td class="age">${item.age} min</td><td class="action-cell">${!item.owner?`<button class="claim" data-id="${item.id}" data-action="claim" aria-label="Claim ${item.id} locally">Claim</button>`:item.owner==='You'?`<button class="release" data-id="${item.id}" data-action="release" aria-label="Release ${item.id} locally">Release</button>`:'<span class="owned">Assigned</span>'}</td></tr>`).join('');
+ if(!visible.length)tbody.innerHTML='<tr><td colspan="5" class="empty"><strong>No matching incidents</strong><p>Try another owner or severity, or clear both filters.</p><button id="empty-clear">Clear filters</button></td></tr>';
+ status.textContent=message||`${visible.length} incident${visible.length===1?'':'s'} shown.`;
+}
+function clearFilters(){severity.value='all';owner.value='all';render('Filters cleared. 3 incidents shown.');document.getElementById('clear').focus();}
+severity.addEventListener('change',()=>render());owner.addEventListener('change',()=>render());
+document.getElementById('clear').addEventListener('click',clearFilters);
+tbody.addEventListener('click',event=>{
+ const button=event.target.closest('button');if(!button)return;
+ if(button.id==='empty-clear'){clearFilters();return;}
+ const item=incidents.find(item=>item.id===button.dataset.id);if(!item)return;
+ if(button.dataset.action==='claim'&&item.owner===null){item.owner='You';render(`${item.id} claimed locally by You. ${filtered().length} incident${filtered().length===1?'':'s'} shown.`);}
+ else if(button.dataset.action==='release'&&item.owner==='You'){item.owner=null;render(`${item.id} released locally and is now Unowned. ${filtered().length} incident${filtered().length===1?'':'s'} shown.`);}
+ const replacement=tbody.querySelector(`[data-id="${item.id}"]`);
+ if(replacement)replacement.focus();else owner.focus();
+});
+document.getElementById('reset').addEventListener('click',()=>{incidents=sample.map(item=>({...item}));render(`Sample restored. ${filtered().length} incident${filtered().length===1?'':'s'} shown; filters kept.`);});
+render('3 incidents shown. 1 unowned incident is ready to claim.');
+</script>
+</body>
+</html>

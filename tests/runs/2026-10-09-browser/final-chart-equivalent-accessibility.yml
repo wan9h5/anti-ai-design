@@ -1,0 +1,51 @@
+- main:
+  - paragraph: Incident trend
+  - heading "Monthly incident counts" [level=1]
+  - paragraph: January–June 2026 · incidents/month
+  - paragraph:
+    - strong: Synthetic demo fixture.
+    - text: Generated for this demo; no production data.
+  - paragraph:
+    - text: Counts fluctuate across the six months, peaking at
+    - strong: 30 in April
+    - text: and reaching
+    - strong: 16 in June
+    - text: . June is 2 incidents lower than January.
+  - figure "Six-month trend":
+    - heading "Six-month trend" [level=2]
+    - region "Monthly incident line chart; scroll horizontally on narrow screens":
+      - img "Monthly incident counts, January to June 2026 Synthetic demo data, in incidents per month. January 18, February 25, March 21, April 30, May 24, June 16. The vertical axis runs from zero to 35. Counts rise and fall, with the highest count in April and lowest in June. Exact values are also available in the table below.": Incidents/month 0 10 20 30 35 18 25 21 30 24 16 Jan Feb Mar Apr May Jun
+    - text: Each point is one monthly count. All values are labeled; no hovering is needed. On narrow screens, focus or touch the chart to scroll, or read the table below.
+  - region "Exact monthly values":
+    - heading "Exact monthly values" [level=2]
+    - table "January–June 2026 · synthetic demo fixture":
+      - caption: January–June 2026 · synthetic demo fixture
+      - rowgroup:
+        - row "Month Incidents/month":
+          - columnheader "Month"
+          - columnheader "Incidents/month"
+      - rowgroup:
+        - row "January 2026 18":
+          - rowheader "January 2026"
+          - cell "18"
+        - row "February 2026 25":
+          - rowheader "February 2026"
+          - cell "25"
+        - row "March 2026 21":
+          - rowheader "March 2026"
+          - cell "21"
+        - row "April 2026 30":
+          - rowheader "April 2026"
+          - cell "30"
+        - row "May 2026 24":
+          - rowheader "May 2026"
+          - cell "24"
+        - row "June 2026 16":
+          - rowheader "June 2026"
+          - cell "16"
+  - paragraph:
+    - strong: "Source:"
+    - text: Fixture generated for this demo, with six supplied monthly counts. No production data.
+  - paragraph:
+    - strong: "Scope:"
+    - text: One count per month; all six months are present. No organization, incident severity, or exposure denominator is supplied. These counts do not establish incident rates or causes.
