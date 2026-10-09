@@ -1,0 +1,38 @@
+- main:
+  - heading "Reconciliation" [level=1]
+  - paragraph: Synthetic local data · 2 accounts · Changes reset on reload
+  - paragraph: Compare amounts side by side. Delta = received − expected. All amounts are USD.
+  - region "Reconciliation comparison":
+    - table "Account reconciliation":
+      - caption: Account reconciliation
+      - rowgroup:
+        - row "Account Expected USD Received USD Delta USD Owner Status Action":
+          - columnheader "Account"
+          - columnheader "Expected USD"
+          - columnheader "Received USD"
+          - columnheader "Delta USD"
+          - columnheader "Owner"
+          - columnheader "Status"
+          - columnheader "Action"
+      - rowgroup:
+        - row "AC-01 1,200.00 1,180.00 −20.00 Ada Review Resolve AC-01":
+          - rowheader "AC-01"
+          - cell "1,200.00"
+          - cell "1,180.00"
+          - cell "−20.00"
+          - cell "Ada"
+          - cell "Review"
+          - cell "Resolve AC-01":
+            - button "Resolve AC-01": Resolve
+        - row "AC-02 800.00 800.00 0.00 Lin Matched Inspect invoice for AC-02":
+          - rowheader "AC-02"
+          - cell "800.00"
+          - cell "800.00"
+          - cell "0.00"
+          - cell "Lin"
+          - cell "Matched"
+          - cell "Inspect invoice for AC-02":
+            - button "Inspect invoice for AC-02": Inspect invoice
+  - paragraph: Resolve marks AC-01’s review complete in this demo; it does not change the amounts or settle the −20.00 USD difference. Undo remains available.
+  - paragraph: "On narrow screens, scroll within the table to reach all columns. Keyboard: Tab to the table, then use Left/Right to scroll; Tab to each action."
+  - status

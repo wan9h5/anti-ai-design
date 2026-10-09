@@ -7,6 +7,8 @@ import json
 import re
 import sys
 import unicodedata
+import struct
+import zlib
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -80,7 +82,32 @@ def inspect_package(root: Path) -> dict:
             continue
         if path.name == ".env" or path.name.startswith(".env."):
             errors.append("Environment file must not be exported: " + relative)
-        if path.suffix.lower() not in ALLOWED_SUFFIXES:
+        if re.fullmatch(r"tests/runs/[^/]+/(?:screenshots/)?[^/]+\.png", relative):
+            try:
+                data = path.read_bytes()
+                if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+                    raise ValueError("invalid signature")
+                offset, chunks = 8, []
+                while offset < len(data):
+                    length = struct.unpack(">I", data[offset:offset + 4])[0]
+                    kind = data[offset + 4:offset + 8]
+                    end = offset + 8 + length
+                    payload = data[offset + 4:end]
+                    crc = struct.unpack(">I", data[end:end + 4])[0]
+                    if kind not in {b"IHDR", b"IDAT", b"IEND"} or zlib.crc32(payload) != crc:
+                        raise ValueError("unexpected metadata or corrupt chunk")
+                    chunks.append(kind)
+                    offset = end + 4
+                    if kind == b"IEND":
+                        break
+                if offset != len(data) or not chunks or chunks[0] != b"IHDR" or chunks[-1] != b"IEND" or b"IDAT" not in chunks:
+                    raise ValueError("incomplete PNG or trailing content")
+            except (ValueError, OSError, struct.error) as error:
+                errors.append("Invalid screenshot PNG: " + relative + " (" + str(error) + ")")
+            continue
+        if re.fullmatch(r"tests/runs/[^/]+/run-browser-checks\.cjs", relative):
+            pass  # Text-scanned browser harness; other unapproved binaries remain rejected.
+        elif path.suffix.lower() not in ALLOWED_SUFFIXES:
             errors.append("Unapproved artifact type: " + relative)
             continue
         try:

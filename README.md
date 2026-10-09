@@ -1,6 +1,6 @@
 # Anti-AI Design
 
-Latest evaluation: all 12 scenarios were executed on 2026-10-09: 4 pass, 8 partial; 33 jsdom checks pass. Artifact browser/visual/native-input checks remain unperformed. [Full record](tests/runs/2026-10-09/report.md).
+Latest acceptance follow-up (2026-10-09): all 12 scenario acceptance conditions are met after targeted fixes and review retesting; 75 real Chromium check/measurement records pass. This includes assisted repairs, not a 12/12 first-generation benchmark or overall WCAG certification. [Browser follow-up](tests/runs/2026-10-09-browser/report.md) · [Initial 4 pass / 8 partial run](tests/runs/2026-10-09/report.md).
 
 A general interface design constraint and review framework that helps AI reduce formulaic, hollow, and template-driven output while fitting real users, real tasks, and development constraints.
 

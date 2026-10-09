@@ -32,6 +32,8 @@ For example, “three columns” is not a finding. “The result needed for revi
 
 Use the finding shape in [output contracts](../references/output-contracts.md) for substantial audits. Do not invent CSS pixel values, contrast ratios, usage frequencies, severity scores, or test outcomes from a screenshot.
 
+For a performance question, load [performance and capability integrity](../references/performance-integrity.md) before answering, even for a short screenshot review. Separate controlled lab diagnostics from field measurements on users' devices. Separate input-to-feedback/paint responsiveness from completion of a network or analysis job. State which evidence is available for each; do not infer either timing or a causal bottleneck from appearance. Recommend a controlled comparison tied to the user's slow operation.
+
 ## Prioritize and refactor
 
 Qualitative priority depends on harm, exposure, recovery, and confidence. Fix reproduced task failures, misleading capabilities/results, and inaccessible critical paths before visual polish. Keep uncertain hypotheses visibly provisional.

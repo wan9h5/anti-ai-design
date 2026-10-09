@@ -3,6 +3,8 @@ import importlib.util
 import json
 import tempfile
 import unittest
+import struct
+import zlib
 from pathlib import Path
 
 SPEC = importlib.util.spec_from_file_location(
@@ -53,6 +55,34 @@ class PackageIntegrityTests(unittest.TestCase):
     def test_valid_package(self):
         self.write("tests/artifacts/demo.html", '<html lang="en"><p>Clearly labeled synthetic demo.</p></html>\n')
         self.assertTrue(self.result()["ok"], self.result()["errors"])
+
+    def screenshot_fixture(self):
+        def chunk(kind, data):
+            return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', zlib.crc32(kind + data))
+        return (b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', 1, 1, 8, 2, 0, 0, 0))
+                + chunk(b'IDAT', zlib.compress(b'\x00\xff\xff\xff')) + chunk(b'IEND', b''))
+
+    def test_screenshot_evidence_is_accepted(self):
+        p = self.root / 'tests/runs/demo/screenshots/test.png'
+        p.parent.mkdir(parents=True)
+        p.write_bytes(self.screenshot_fixture())
+        self.assertTrue(self.result()['ok'], self.result()['errors'])
+
+    def test_screenshot_cannot_hide_trailing_content(self):
+        p = self.root / 'tests/runs/demo/screenshots/test.png'
+        p.parent.mkdir(parents=True)
+        p.write_bytes(self.screenshot_fixture() + b'hidden content')
+        self.assertTrue(any('Invalid screenshot PNG' in e for e in self.result()['errors']))
+
+    def test_corrupt_screenshot_is_rejected(self):
+        p = self.root / 'tests/runs/demo/screenshots/test.png'
+        p.parent.mkdir(parents=True)
+        p.write_bytes(self.screenshot_fixture()[:-5])
+        self.assertFalse(self.result()['ok'])
+
+    def test_png_outside_evidence_directory_is_rejected(self):
+        (self.root / 'unexpected.png').write_bytes(self.screenshot_fixture())
+        self.assertTrue(any('Unapproved artifact type' in e for e in self.result()['errors']))
 
     def test_missing_required_workflow(self):
         (self.root / "workflows/create.md").unlink()
