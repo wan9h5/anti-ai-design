@@ -1,5 +1,7 @@
 # Initial evaluation record
 
+Latest evaluation: all 12 scenarios were executed on 2026-10-09: 4 pass, 8 partial; 33 jsdom checks pass. Artifact browser/visual/native-input checks remain unperformed. [Full record](runs/2026-10-09/report.md).
+
 Date: 2026-10-09. Scope: the initial publication candidate, not a usability or cross-model benchmark.
 
 ## Method and candidate

@@ -1,5 +1,7 @@
 # Testing this skill
 
+Latest evaluation: all 12 scenarios were executed on 2026-10-09: 4 pass, 8 partial; 33 jsdom checks pass. Artifact browser/visual/native-input checks remain unperformed. [Full record](runs/2026-10-09/report.md).
+
 ## Offline checks
 
 `python scripts/validate.py .` validates package/frontmatter, internal links/anchors, source/pattern integrity, and obvious publication hazards. `python -m unittest discover -s tests -p "test_*.py"` checks that real corruptions are detected and valid exceptions in the package model remain accepted.
