@@ -1,0 +1,171 @@
+{
+  "method": "Node + jsdom, no rendering/browser; synthetic events and programmatic focus only",
+  "checks": [
+    {
+      "scenario": "create-triage",
+      "check": "three records and critical-first comparison",
+      "result": "pass"
+    },
+    {
+      "scenario": "create-triage",
+      "check": "severity filter",
+      "result": "pass"
+    },
+    {
+      "scenario": "create-triage",
+      "check": "claim updates owner and preserves useful focus when row disappears",
+      "result": "pass"
+    },
+    {
+      "scenario": "create-triage",
+      "check": "empty recovery and release",
+      "result": "pass"
+    },
+    {
+      "scenario": "create-triage",
+      "check": "reset and local-only disclosure",
+      "result": "pass"
+    },
+    {
+      "scenario": "dense-expert",
+      "check": "all seven columns and both rows retained",
+      "result": "pass"
+    },
+    {
+      "scenario": "dense-expert",
+      "check": "resolve and undo preserve discrepancy",
+      "result": "pass"
+    },
+    {
+      "scenario": "dense-expert",
+      "check": "invoice open close and programmatic focus restoration",
+      "result": "pass"
+    },
+    {
+      "scenario": "dense-expert",
+      "check": "Escape handler closes invoice",
+      "result": "pass"
+    },
+    {
+      "scenario": "dense-expert",
+      "check": "scroll region reachable and overflow declared in CSS",
+      "result": "pass"
+    },
+    {
+      "scenario": "expressive-brand",
+      "check": "warm gradient and serif brand preserved in source",
+      "result": "pass"
+    },
+    {
+      "scenario": "expressive-brand",
+      "check": "empty name retained and actionable validation focused",
+      "result": "pass"
+    },
+    {
+      "scenario": "expressive-brand",
+      "check": "invalid email association and retained name",
+      "result": "pass"
+    },
+    {
+      "scenario": "expressive-brand",
+      "check": "registration preview with no reservation claim",
+      "result": "pass"
+    },
+    {
+      "scenario": "expressive-brand",
+      "check": "edit and clear recovery",
+      "result": "pass"
+    },
+    {
+      "scenario": "truthful-demo",
+      "check": "action/result explicitly disclose no AI backend",
+      "result": "pass"
+    },
+    {
+      "scenario": "truthful-demo",
+      "check": "SYN-01 arithmetic and provenance",
+      "result": "pass"
+    },
+    {
+      "scenario": "truthful-demo",
+      "check": "input change clears prior visible summary",
+      "result": "pass"
+    },
+    {
+      "scenario": "truthful-demo",
+      "check": "SYN-02 arithmetic",
+      "result": "pass"
+    },
+    {
+      "scenario": "truthful-demo",
+      "check": "invalid fixture recovers without false execution",
+      "result": "pass"
+    },
+    {
+      "scenario": "stale-result",
+      "check": "original saved run retained with threshold",
+      "result": "pass"
+    },
+    {
+      "scenario": "stale-result",
+      "check": "editing threshold marks previous result without recomputation",
+      "result": "pass"
+    },
+    {
+      "scenario": "stale-result",
+      "check": "rerun updates result and preserves history",
+      "result": "pass"
+    },
+    {
+      "scenario": "stale-result",
+      "check": "blank rejected instead of coerced to zero",
+      "result": "pass"
+    },
+    {
+      "scenario": "stale-result",
+      "check": "equality exclusion and zero matches",
+      "result": "pass"
+    },
+    {
+      "scenario": "stale-result",
+      "check": "returning to latest threshold makes result current",
+      "result": "pass"
+    },
+    {
+      "scenario": "form-recovery",
+      "check": "invalid input retains both fields and associates error",
+      "result": "pass"
+    },
+    {
+      "scenario": "form-recovery",
+      "check": "outage distinct from input error and offers retry",
+      "result": "pass"
+    },
+    {
+      "scenario": "form-recovery",
+      "check": "retry retains data during repeated outage",
+      "result": "pass"
+    },
+    {
+      "scenario": "form-recovery",
+      "check": "available recovery success remains local",
+      "result": "pass"
+    },
+    {
+      "scenario": "form-recovery",
+      "check": "editing clears stale success",
+      "result": "pass"
+    },
+    {
+      "scenario": "chart-equivalent",
+      "check": "six exact monthly counts in semantic table",
+      "result": "pass"
+    },
+    {
+      "scenario": "chart-equivalent",
+      "check": "chart has accessible name and synthetic source disclosure",
+      "result": "pass"
+    }
+  ],
+  "script_errors": []
+}

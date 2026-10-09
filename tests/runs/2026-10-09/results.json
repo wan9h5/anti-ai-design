@@ -1,0 +1,604 @@
+{
+  "date": "2026-10-09",
+  "skill_revision": "02bf0ffd21141fbba5496400de1e7469e256f9c5",
+  "suite": "tests/scenarios.json schema 1; unchanged 12 cases",
+  "environment": {
+    "agent": "Codex; model identity GPT-6 per runtime instructions, exact build not exposed; inherited configuration",
+    "isolation": "12 new task threads, fork_turns=none, skill-only snapshot excludes README/examples/tests/rubrics; one owner per case; shared filesystem, workers instructed not to read other outputs",
+    "reviewer": "Root maintainer; saw rubrics, not independent/blinded evaluator",
+    "node": "v24.19.0",
+    "jsdom": "30.1.2",
+    "browser": "No artifact browser checks. Cloud file URL blocked; no workaround used. No Chromium/Playwright browser launched."
+  },
+  "method": "One skill-loaded attempt per case; seven implementations inspected, five written reviews examined; 33 root-run jsdom checks. No baseline, repeated sampling, cross-model or representative-user test.",
+  "scenarios": [
+    {
+      "id": "create-triage",
+      "mode": "create",
+      "prompt": "Build a local incident triage interface for an on-call operator, with synthetic data and working claim/filter actions.",
+      "context": "Desktop browser; incident severity, owner and age supplied. No production incident connection.",
+      "must": [
+        "Deliver a concrete interface/implementation, not only discussion.",
+        "Use task-appropriate comparison hierarchy and distinguish local synthetic state.",
+        "Cover useful filter/claim feedback and relevant error/empty state."
+      ],
+      "must_not": [
+        "Invent production paging or saved-server-state claims.",
+        "Add decorative analytics without a task question."
+      ],
+      "added_synthetic_input": "INC-01 critical, unowned, age 12min, API unavailable; INC-02 warning, Ada, 30min, queue delay; INC-03 critical, Lin, 5min, storage errors.",
+      "verdict": "partial",
+      "reason": "Created an aligned incident table with source-appropriate severity/owner/age hierarchy, truthful local scope, filters, claim/release and empty recovery. Five jsdom checks passed. Rendered hierarchy, actual pointer/keyboard interaction, targets and narrow layout remain untested.",
+      "output": "create-triage.md",
+      "implementation": "create-triage.html",
+      "must_assessment": [
+        {
+          "criterion": "Deliver a concrete interface/implementation, not only discussion.",
+          "result": "pass",
+          "evidence": "create-triage.html concrete artifact"
+        },
+        {
+          "criterion": "Use task-appropriate comparison hierarchy and distinguish local synthetic state.",
+          "result": "pass",
+          "evidence": "Aligned table, labeled synthetic/local scope; source inspection"
+        },
+        {
+          "criterion": "Cover useful filter/claim feedback and relevant error/empty state.",
+          "result": "partial",
+          "evidence": "DOM filter/claim/empty recovery passed; native behavior/visual feedback pending"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Invent production paging or saved-server-state claims.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Add decorative analytics without a task question.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "screenshot-boundary",
+      "mode": "review",
+      "prompt": "Review this screenshot description: three panels for describing work, fixed-plan review and completed results. Demo data and deterministic mode are visible; a button says Generate plan.",
+      "context": "Static synthetic screen description only; no DOM, code, measured colors, or live behavior.",
+      "must": [
+        "Identify the label/capability expectation question with provisional interpretation.",
+        "Preserve useful mode/provenance disclosure.",
+        "Mark keyboard, responsiveness, contrast ratios and real execution as unverified."
+      ],
+      "must_not": [
+        "Declare dead controls, WCAG nonconformance, measured speed, or scientific validity.",
+        "Treat three panels/dark results as inherent defects."
+      ],
+      "added_synthetic_input": "",
+      "verdict": "pass",
+      "reason": "Review explicitly treats the input as a written description; Generate plan is a provisional capability expectation question with a deterministic-template exception. Retains demo/mode/provenance and leaves colors, keyboard, responsiveness, contrast and real execution unverified.",
+      "output": "screenshot-boundary.md",
+      "implementation": null,
+      "must_assessment": [
+        {
+          "criterion": "Identify the label/capability expectation question with provisional interpretation.",
+          "result": "pass",
+          "evidence": "Provisional wording finding with deterministic-template exception"
+        },
+        {
+          "criterion": "Preserve useful mode/provenance disclosure.",
+          "result": "pass",
+          "evidence": "Explicit section preserves demo/mode/provenance"
+        },
+        {
+          "criterion": "Mark keyboard, responsiveness, contrast ratios and real execution as unverified.",
+          "result": "pass",
+          "evidence": "Explicitly states these behavior/contrast checks unverified"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Declare dead controls, WCAG nonconformance, measured speed, or scientific validity.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Treat three panels/dark results as inherent defects.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "dense-expert",
+      "mode": "refactor",
+      "prompt": "Our expert reconciliation table is dense. Keep rapid side-by-side comparison; improve it without losing columns or tasks.",
+      "context": "Keyboard and pointer use; frequent tasks; column definitions available.",
+      "must": [
+        "Preserve comparison needs and justified density.",
+        "Inspect hierarchy, useful targets, overflow and detail routes.",
+        "Explain changes in task terms."
+      ],
+      "must_not": [
+        "Replace all rows with spacious cards by default.",
+        "Declare expert users exempt from accessibility."
+      ],
+      "added_synthetic_input": "input-dense.html; seven column definitions: account ID; expected/received USD; delta received minus expected; assigned owner; review/matched/resolved status; resolve/invoice task.",
+      "verdict": "partial",
+      "reason": "Retained seven columns, both accounts and row tasks; aligned amounts, scoped overflow region, undo and invoice detail with focus recovery. Five jsdom checks passed. Actual target geometry, keyboard scrolling, rendered readability and overflow remain untested.",
+      "output": "dense-expert.md",
+      "implementation": "dense-expert.html",
+      "must_assessment": [
+        {
+          "criterion": "Preserve comparison needs and justified density.",
+          "result": "pass",
+          "evidence": "Same seven columns, comparison and tasks retained"
+        },
+        {
+          "criterion": "Inspect hierarchy, useful targets, overflow and detail routes.",
+          "result": "partial",
+          "evidence": "Source and DOM inspection cover hierarchy/overflow/detail; actual geometry pending"
+        },
+        {
+          "criterion": "Explain changes in task terms.",
+          "result": "pass",
+          "evidence": "Changes linked to comparison, recovery and task scope"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Replace all rows with spacious cards by default.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Declare expert users exempt from accessibility.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "expressive-brand",
+      "mode": "create",
+      "prompt": "Design an expressive arts-event page with a warm gradient and serif headlines as part of our established brand.",
+      "context": "Brand requested explicitly; registration action and event details supplied.",
+      "must": [
+        "Respect the specified brand.",
+        "Preserve clear event/registration hierarchy.",
+        "Check relevant content readability and capability."
+      ],
+      "must_not": [
+        "Ban gradients or serif type as AI patterns.",
+        "Invent a substitute restrained brand."
+      ],
+      "added_synthetic_input": "Synthetic Night of Print, 2026-11-14 18:00-21:00, Studio Hall, print exhibition/workshop, free registration, capacity 30. No backend.",
+      "verdict": "partial",
+      "reason": "Preserved warm gradient and serif headlines, event/date/location/entry hierarchy and an explicit local registration preview. Five jsdom checks passed for field errors, preview, edit/clear and programmatic focus. Rendered gradient contrast, composition and native keyboard operation remain untested.",
+      "output": "expressive-brand.md",
+      "implementation": "expressive-brand.html",
+      "must_assessment": [
+        {
+          "criterion": "Respect the specified brand.",
+          "result": "pass",
+          "evidence": "Warm gradient and serif headline source"
+        },
+        {
+          "criterion": "Preserve clear event/registration hierarchy.",
+          "result": "pass",
+          "evidence": "Event details and registration hierarchy in semantic source"
+        },
+        {
+          "criterion": "Check relevant content readability and capability.",
+          "result": "partial",
+          "evidence": "Capability DOM checks passed; rendered readability pending"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Ban gradients or serif type as AI patterns.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Invent a substitute restrained brand.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "truthful-demo",
+      "mode": "create",
+      "prompt": "Add an AI analysis button to a demo with no AI/backend yet. It should demonstrate the future flow.",
+      "context": "Only a deterministic local fixture is available.",
+      "must": [
+        "Deliver a clearly labeled simulation or explained smaller capability.",
+        "Name actual processing and scope at action/result.",
+        "Keep uncertainty and capability boundaries understandable."
+      ],
+      "must_not": [
+        "Claim AI execution or successful upload/integration.",
+        "Hide simulation status only in distant documentation."
+      ],
+      "added_synthetic_input": "SYN-01=[2,4,6]; SYN-02=[3,3,3]; mean and range local arithmetic only.",
+      "verdict": "partial",
+      "reason": "Action-adjacent disclosure and result mode explicitly say no AI/backend; only local fixture arithmetic runs. Five jsdom checks passed, including both fixtures and input/result invalidation. In-browser discoverability, rendering and native keyboard completion remain untested.",
+      "output": "truthful-demo.md",
+      "implementation": "truthful-demo.html",
+      "must_assessment": [
+        {
+          "criterion": "Deliver a clearly labeled simulation or explained smaller capability.",
+          "result": "pass",
+          "evidence": "Labeled local simulation artifact"
+        },
+        {
+          "criterion": "Name actual processing and scope at action/result.",
+          "result": "pass",
+          "evidence": "Actual mean/range processing and no-AI boundary at action/result"
+        },
+        {
+          "criterion": "Keep uncertainty and capability boundaries understandable.",
+          "result": "partial",
+          "evidence": "Disclosure implemented; browser-visible interpretation pending"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Claim AI execution or successful upload/integration.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Hide simulation status only in distant documentation.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "stale-result",
+      "mode": "refactor",
+      "prompt": "Changing a threshold leaves the old report on screen. Make this result understandable without discarding useful history.",
+      "context": "Prototype has a saved run with its original threshold.",
+      "must": [
+        "Bind displayed output to its original configuration.",
+        "Mark stale or historical state after edits.",
+        "Provide a deliberate rerun/review path."
+      ],
+      "must_not": [
+        "Show old output as if newly recomputed.",
+        "Remove provenance to simplify appearance."
+      ],
+      "added_synthetic_input": "input-stale.html",
+      "verdict": "partial",
+      "reason": "Output keeps original threshold, fixture and run ID; editing marks previous output; rerun appends session history and rejects blank input. Six jsdom checks passed. Native number-input/event behavior, rendered state clarity and browser keyboard use remain untested.",
+      "output": "stale-result.md",
+      "implementation": "stale-result.html",
+      "must_assessment": [
+        {
+          "criterion": "Bind displayed output to its original configuration.",
+          "result": "pass",
+          "evidence": "Old/new result each names threshold/run and preserves source"
+        },
+        {
+          "criterion": "Mark stale or historical state after edits.",
+          "result": "pass",
+          "evidence": "DOM edit changes status to previous without recomputing"
+        },
+        {
+          "criterion": "Provide a deliberate rerun/review path.",
+          "result": "partial",
+          "evidence": "Rerun/history DOM passed; native browser path pending"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Show old output as if newly recomputed.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Remove provenance to simplify appearance.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "targets-exception",
+      "mode": "review",
+      "prompt": "Is every 20 CSS px icon control a WCAG AA failure? The actual hit areas and neighboring spacing are supplied.",
+      "context": "Evaluate 2.5.8 and named exceptions; do not assume artwork equals hit area.",
+      "must": [
+        "Apply 24 CSS px AA size or valid exception using actual geometry.",
+        "Distinguish enhanced 44 CSS px AAA.",
+        "Assess usability separately from minimum conformance."
+      ],
+      "must_not": [
+        "Assert universal 44 CSS px AA minimum.",
+        "Declare a result without sufficient geometry."
+      ],
+      "added_synthetic_input": "A artwork 20x20 hit32x32; B two hit20x20 rectangles at (0,0) and (40,0), no neighbors; C at (0,0) and (22,0), no other documented exception; D hit/spacing unknown; CSS pixel top-left positions.",
+      "verdict": "pass",
+      "reason": "Correct local 2.5.8 decisions: A passes 32x32 hit target, B passes spacing at center distance 40, C fails spacing at center distance 22 absent another applicable exception, D is unknown. Names all five exceptions, distinguishes 24 AA from enhanced 44 AAA and usability from conformance.",
+      "output": "targets-exception.md",
+      "implementation": null,
+      "must_assessment": [
+        {
+          "criterion": "Apply 24 CSS px AA size or valid exception using actual geometry.",
+          "result": "pass",
+          "evidence": "A/B/C/D geometry and named exceptions"
+        },
+        {
+          "criterion": "Distinguish enhanced 44 CSS px AAA.",
+          "result": "pass",
+          "evidence": "44x44 explicitly AAA"
+        },
+        {
+          "criterion": "Assess usability separately from minimum conformance.",
+          "result": "pass",
+          "evidence": "Usability impact provisional, local conformance separated"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Assert universal 44 CSS px AA minimum.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Declare a result without sufficient geometry.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "line-axis",
+      "mode": "review",
+      "prompt": "A line chart shows temperature changes from 18 to 22 degrees; the axis starts at 18 and is visibly labeled. Should it always start at zero?",
+      "context": "Continuous line trend, units and interval supplied.",
+      "must": [
+        "Distinguish line-range selection from bar magnitude.",
+        "Consider clear disclosure and actual comparison question.",
+        "Avoid a universal axis prohibition."
+      ],
+      "must_not": [
+        "Treat all non-zero axes as deceptive.",
+        "Apply a bar-baseline rule mechanically."
+      ],
+      "added_synthetic_input": "Celsius units; compare changes over time. Full series not supplied.",
+      "verdict": "pass",
+      "reason": "Does not mechanically apply a bar baseline rule to a labeled temperature line trend. Connects range choice to the comparison task and states remaining inspection/comprehension limits.",
+      "output": "line-axis.md",
+      "implementation": null,
+      "must_assessment": [
+        {
+          "criterion": "Distinguish line-range selection from bar magnitude.",
+          "result": "pass",
+          "evidence": "Line position/range distinguished from bar magnitude"
+        },
+        {
+          "criterion": "Consider clear disclosure and actual comparison question.",
+          "result": "pass",
+          "evidence": "Labeled interval/units and trend comparison considered"
+        },
+        {
+          "criterion": "Avoid a universal axis prohibition.",
+          "result": "pass",
+          "evidence": "No blanket zero-axis prohibition"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Treat all non-zero axes as deceptive.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Apply a bar-baseline rule mechanically.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "chart-equivalent",
+      "mode": "create",
+      "prompt": "Build a trend view for monthly incident counts with a labeled line chart and no mouse-only dependency.",
+      "context": "Synthetic monthly counts supplied; users need trend plus exact values.",
+      "must": [
+        "Deliver chart context/units/range/mode and usable equivalent data.",
+        "Provide non-color and keyboard/touch interpretation paths.",
+        "Use meaningful defaults."
+      ],
+      "must_not": [
+        "Rely only on colored hover tooltips.",
+        "Invent real analytics data."
+      ],
+      "added_synthetic_input": "Jan-Jun 2026 synthetic monthly counts [18,25,21,30,24,16], incidents/month; no production data.",
+      "verdict": "partial",
+      "reason": "Created six labeled points, SVG accessible description, prose interpretation and permanent exact-value table. Two jsdom structure checks passed; independent scale arithmetic and value inspection agree with fixture. Touch/keyboard scrolling, rendered labels and assistive technology remain untested.",
+      "output": "chart-equivalent.md",
+      "implementation": "chart-equivalent.html",
+      "must_assessment": [
+        {
+          "criterion": "Deliver chart context/units/range/mode and usable equivalent data.",
+          "result": "pass",
+          "evidence": "Labels/range/units/mode plus semantic exact table"
+        },
+        {
+          "criterion": "Provide non-color and keyboard/touch interpretation paths.",
+          "result": "partial",
+          "evidence": "Non-color prose/table route implemented; native keyboard/touch pending"
+        },
+        {
+          "criterion": "Use meaningful defaults.",
+          "result": "pass",
+          "evidence": "Six supplied months and purposeful initial view"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Rely only on colored hover tooltips.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Invent real analytics data.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "bilingual-exceptions",
+      "mode": "review",
+      "prompt": "Review a Chinese workbench containing English workflow names and technical identifiers; inspect actual paragraphs and markup.",
+      "context": "Domain users use these terms; not every English token is a passage change.",
+      "must": [
+        "Distinguish technical/proper-name exceptions from genuine passage changes.",
+        "Evaluate comprehension and language semantics separately.",
+        "Keep useful domain terminology."
+      ],
+      "must_not": [
+        "Claim mixed language alone violates WCAG.",
+        "Translate stable technical identifiers blindly."
+      ],
+      "added_synthetic_input": "input-bilingual.html",
+      "verdict": "pass",
+      "reason": "Inspected actual supplied HTML. Retains technical identifiers and mixed technical terms while correctly identifying the full English paragraph inheriting zh-CN without lang=en; comprehension and language semantics are separate.",
+      "output": "bilingual-exceptions.md",
+      "implementation": null,
+      "must_assessment": [
+        {
+          "criterion": "Distinguish technical/proper-name exceptions from genuine passage changes.",
+          "result": "pass",
+          "evidence": "Technical/proper identifiers distinguished from full English prose"
+        },
+        {
+          "criterion": "Evaluate comprehension and language semantics separately.",
+          "result": "pass",
+          "evidence": "User comprehension unknown; language semantics source observed"
+        },
+        {
+          "criterion": "Keep useful domain terminology.",
+          "result": "pass",
+          "evidence": "Stable domain names retained"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Claim mixed language alone violates WCAG.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Translate stable technical identifiers blindly.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "performance-evidence",
+      "mode": "review",
+      "prompt": "This screenshot has glass panels. Are they why the app is slow?",
+      "context": "No profiling or live performance data.",
+      "must": [
+        "State the causal question is unverified.",
+        "Propose representative profiling and relevant comparisons.",
+        "Distinguish lab/field and UI response/server job completion."
+      ],
+      "must_not": [
+        "Infer latency or Web Vitals from the image.",
+        "Attribute a slowdown without measurement."
+      ],
+      "added_synthetic_input": "Written screenshot claim only, no actual image file.",
+      "verdict": "partial",
+      "reason": "Does not infer latency or causal slowdown from the description and proposes fixed-condition profiling/effect-toggle comparison; distinguishes lab from field. It mentions different response phases but does not explicitly separate UI response duration from backend scientific-job completion, as required by the third must criterion.",
+      "output": "performance-evidence.md",
+      "implementation": null,
+      "must_assessment": [
+        {
+          "criterion": "State the causal question is unverified.",
+          "result": "pass",
+          "evidence": "Causal question unverified"
+        },
+        {
+          "criterion": "Propose representative profiling and relevant comparisons.",
+          "result": "pass",
+          "evidence": "Representative profile and effect-only comparison proposed"
+        },
+        {
+          "criterion": "Distinguish lab/field and UI response/server job completion.",
+          "result": "partial",
+          "evidence": "Lab/field clear; UI response vs backend job completion not explicit"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Infer latency or Web Vitals from the image.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Attribute a slowdown without measurement.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    },
+    {
+      "id": "form-recovery",
+      "mode": "refactor",
+      "prompt": "A submit form clears all fields after one invalid entry and uses the same error message for server outages.",
+      "context": "Inputs can be retained; some errors are field validation and others are service failures.",
+      "must": [
+        "Preserve valid/invalid entries for correction.",
+        "Associate actionable validation with fields.",
+        "Separate service failure recovery from input repair."
+      ],
+      "must_not": [
+        "Blame the user for outage/permission issues.",
+        "Solve solely with a transient toast."
+      ],
+      "added_synthetic_input": "input-form.html",
+      "verdict": "partial",
+      "reason": "Refactor retains name/email through validation/outage/retry/success, attaches actionable field error and separates simulated outage recovery. Five jsdom checks passed. Actual browser validity, native keyboard/focus and announced errors remain untested.",
+      "output": "form-recovery.md",
+      "implementation": "form-recovery.html",
+      "must_assessment": [
+        {
+          "criterion": "Preserve valid/invalid entries for correction.",
+          "result": "pass",
+          "evidence": "DOM tests retained valid/invalid entries"
+        },
+        {
+          "criterion": "Associate actionable validation with fields.",
+          "result": "pass",
+          "evidence": "Actionable associated email error and programmatic focus"
+        },
+        {
+          "criterion": "Separate service failure recovery from input repair.",
+          "result": "partial",
+          "evidence": "Distinct simulated service retry DOM passed; native browser path pending"
+        }
+      ],
+      "must_not_assessment": [
+        {
+          "criterion": "Blame the user for outage/permission issues.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        },
+        {
+          "criterion": "Solve solely with a transient toast.",
+          "result": "pass",
+          "evidence": "No violation found in produced review and inspected implementation/source; bounded by stated runtime limits."
+        }
+      ]
+    }
+  ]
+}
