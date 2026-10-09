@@ -1,6 +1,6 @@
 ---
 name: anti-ai-design
-description: Generate product UI from a brief, or review and refactor an existing screen or flow for task fit, information architecture, usable density, interaction quality, and truthful capabilities. Use for requests to remove generic AI UI patterns or make an interface more purposeful. Does not detect AI authorship.
+description: Apply general interface design constraints to create, review, or refactor UI for real users and tasks, deliberate visual character, usable density, interaction quality, truthful capabilities, and feasible implementation. Use for requests to remove generic AI UI patterns or make an interface more purposeful. Does not detect AI authorship.
 ---
 
 # Anti-AI Design
@@ -19,6 +19,8 @@ Turn a product brief or existing interface into a concrete, task-fit design. “
 ## Establish the task before composing the screen
 
 Identify who is acting, the trigger, the decision or outcome, the object being worked on, the cost of error, the available data, and device/input constraints. Use supplied research and product rules. Ask only consequential missing questions; for reversible choices, proceed with explicit assumptions.
+
+Distinguish the person building the interface from its end users. Do not infer audience expertise from the builder's profession. Capture implementation constraints such as stack, existing components, performance needs, and delivery scope; resolve tradeoffs without silently sacrificing the primary user task. Even when the builder supplies no design requirements, actively establish hierarchy, visual rhythm, and interaction feedback.
 
 Choose structure from the task: comparison, triage, editing, monitoring, exploration, explanation, or sequential submission. Every prominent section should support an identifiable decision or action. A dashboard is a candidate only when monitoring is a real need. Do not invent research, user segments, product rules, or a backend to justify a template.
 
