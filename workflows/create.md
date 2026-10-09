@@ -41,6 +41,10 @@ If implementation is a prototype, make its scope legible near the action/result.
 
 Use the existing platform/component system when suitable. Define a small coherent set of semantic color, type, spacing, border, surface, and motion choices. Choose density with realistic content and supported input methods.
 
+Make a compact visual direction concrete: intended tone, typographic hierarchy, spatial rhythm, semantic emphasis, and one or two content-led choices that give the screen character. Treat these as design proposals, not user-research findings. If no brand brief exists, infer a reversible direction from the task and state it briefly; do not require the user to become a designer before proceeding. Avoid repeating an unrelated project's composition by habit, and avoid novelty that harms recognition or maintainability.
+
+Check the direction with realistic labels, long values, empty/error states, and the main work area. For an existing product, preserve its coherent language unless a change is requested or a concrete problem warrants it.
+
 Before adding ornament, check reading order, grouping, action hierarchy, and the balance of work area and supporting detail. Brand expression can be restrained or expressive; justify it through the user's brief and product. Familiar typefaces or common components are not failures.
 
 For content/brand issues, load [visual design and copy](../references/visual-copy.md). For interactive behavior, load [interaction](../references/interaction.md). For charts, load [data visualization](../references/data-viz.md).

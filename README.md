@@ -1,12 +1,30 @@
 # Anti-AI Design
 
-An open-source agent skill for creating and reviewing purposeful product interfaces.
+A general interface design constraint and review framework that helps AI reduce formulaic, hollow, and template-driven output while fitting real users, real tasks, and development constraints.
+
+Delivered as an agent skill for creating, reviewing, and refactoring interfaces, it combines deliberate visual design, usability, and feasible implementation.
 
 [简体中文](README.zh-CN.md) · [Skill entry point](SKILL.md) · [Evidence](references/evidence.md) · [Evaluation cases](tests/scenarios.json) · [Initial results](tests/evaluation-report.md)
 
 The skill supports **create**, **review**, and **refactor** workflows. It addresses product reasoning, information architecture, density, layout, visual sameness, microcopy, interaction, data visualization, accessibility, performance, and capability integrity.
 
 “Anti-AI” names a concern about ungrounded defaults. The skill does not detect AI authorship, blacklist colors/components, promise universal usability, or produce an aesthetic score. Familiar controls, dense expert tables, expressive brands, and sparse forms can all be appropriate.
+
+## Who it serves
+
+Developers, designers, and domain experts use the skill through agents such as Codex. The resulting interface serves the product's actual users. These groups may overlap, but the builder's expertise, taste, and workflow must not automatically become end-user requirements.
+
+Apply it to consumer products, internal systems, expert tools, research platforms, AI for Science, and other domains. Audience expertise and domain requirements are project inputs, not fixed assumptions. Even without an explicit design brief, the agent should actively establish hierarchy, visual rhythm, and interaction feedback.
+
+## Workflow
+
+1. **Frame the context:** distinguish builders from end users; identify tasks, content, devices, existing design systems, and implementation constraints.
+2. **Organize information:** choose structure, priorities, and density from the task rather than defaulting to a dashboard.
+3. **Choose a visual direction:** connect typography, spacing, color, and component choices to actual content and audience; balance distinctiveness with familiar interactions.
+4. **Create or change the artifact:** follow repository conventions, implement meaningful states and interactions, and disclose demo data and capability boundaries.
+5. **Review and verify:** selectively apply the 52 diagnostics, consider valid exceptions, repair concrete issues, and report actual checks.
+
+Scale the workflow to the request. AI4S and bioinformatics panels are applications of this general framework; their domain data and workflows are supplied by the project.
 
 ## Install
 
@@ -48,6 +66,10 @@ The validator checks packaging, internal references, source IDs, pattern complet
 
 
 Initial publication: package/regression checks passed locally. Automatic GitHub CI is not enabled because the current publishing credentials cannot write workflow files. The offline ZIP includes the workflow definition; the public branch excludes it.
+
+## Current priority
+
+Apply the skill to a real task page, inspect realistic content, visual hierarchy, working interactions, and implementation costs, then refine instructions from concrete failures. Cross-model benchmarks and larger user studies are optional later research, not prerequisites for using the skill.
 
 ## Research status and limits
 
