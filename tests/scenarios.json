@@ -181,6 +181,38 @@
         "Blame the user for outage/permission issues.",
         "Solve solely with a transient toast."
       ]
+    },
+    {
+      "id": "page-report-description",
+      "mode": "review",
+      "prompt": "输出 AI 页面分析报告和修改建议，先不要改代码。页面描述：值班告警界面有七列比较表、三个同等醒目的概览卡片，以及页脚的“本地演示数据”说明。主要操作按钮写“AI 自动解决”，实际能力未提供。",
+      "context": "只有合成文字描述；没有图片、DOM、源码或行为测试。用户需要按严重性比较并认领告警。",
+      "must": [
+        "Deliver a complete Chinese report, not only a plan.",
+        "Keep justified expert comparison and demo disclosure; identify label/capability ambiguity provisionally.",
+        "Give located evidence, prioritized findings, concrete changes, ordered plan and acceptance checks.",
+        "Separate inspected description and actual tests from unverified screenshot colors, keyboard, persistence and performance."
+      ],
+      "must_not": [
+        "Claim actual image inspection or AI authorship.",
+        "Invent measured contrast/targets/latency or a passed acceptance test.",
+        "Remove the comparison table by default or implement without a request."
+      ]
+    },
+    {
+      "id": "page-report-source",
+      "mode": "review",
+      "prompt": "Analyze the supplied synthetic HTML and output a page analysis report with modification recommendations. Do not change the page.",
+      "context": "Source inspection only; form-recovery.html from the initial run is supplied. No browser execution requested or performed.",
+      "must": [
+        "Deliver overview, preserved strengths, evidence-linked findings/options, modification plan and actual verification limits.",
+        "Use source observations rather than claiming browser reproduction.",
+        "Allow no substantiated defect when source fits the task; keep recommendations conditional and concrete."
+      ],
+      "must_not": [
+        "Invent a defect quota or AI score.",
+        "Claim runtime, screenshot or whole-WCAG verification from source inspection."
+      ]
     }
   ]
 }
