@@ -1,6 +1,8 @@
 # Testing this skill
 
-Latest acceptance follow-up (2026-10-09): all 12 scenario acceptance conditions are met after targeted fixes and review retesting; 75 real Chromium check/measurement records pass. This includes assisted repairs, not a 12/12 first-generation benchmark or overall WCAG certification. [Browser follow-up](runs/2026-10-09-browser/report.md) · [Initial 4 pass / 8 partial run](runs/2026-10-09/report.md).
+Original 12-scenario acceptance follow-up (2026-10-09): all 12 scenario acceptance conditions are met after targeted fixes and review retesting; 75 real Chromium check/measurement records pass. This includes assisted repairs, not a 12/12 first-generation benchmark or overall WCAG certification. [Browser follow-up](runs/2026-10-09-browser/report.md) · [Initial 4 pass / 8 partial run](runs/2026-10-09/report.md).
+
+Report feature (2026-10-10): both new report scenarios were executed in fresh threads and passed. The catalog now contains 14 scenarios; this does not claim all 14 were rerun against this revision. [Prompts, raw outputs and evaluation](runs/2026-10-10-page-report/evaluation.md).
 
 ## Offline checks
 

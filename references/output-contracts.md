@@ -29,3 +29,15 @@ Describe the revised task/IA, relevant visual decisions, control effects, data/s
 ## Capability contract
 
 For consequential UI claims/actions: input → actual processing/side effect → output → persistence → failure/recovery. Record whether the capability is live, simulated, unavailable, or unverified. Do not treat a cosmetic success state as evidence that processing or saving happened.
+
+## Page analysis report
+
+For an explicitly requested report, include these sections in the user's language; the finding fields above supply the detailed evidence contract.
+
+- **Overview**: page/task, intended audience, evidence inspected, assumptions and short conclusion. Name a description as a description rather than a inspected screenshot.
+- **Keep**: useful choices and why they serve the task. Avoid gratuitous redesign.
+- **Findings and modifications**: use a table or numbered findings. Include ID, location/evidence, issue/task impact, basis/confidence, priority (provisional where needed), exception, concrete modification and acceptance check. Split details into prose if a wide table becomes unreadable.
+- **Modification plan**: ordered steps linked to finding IDs; dependencies and what counts as completion. Separate necessary fixes, provisional checks and optional style changes.
+- **Verification and limits**: actual inspections/tests and results, unverified behavior and focused validation actions. Never describe a planned check as executed.
+
+Keep the report complete but proportionate. No invented AI/aesthetic/UX score, authorship verdict, measured values, defect quota or test results. A report can contain no substantiated defects and still give conditional improvement options.

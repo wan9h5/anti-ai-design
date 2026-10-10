@@ -44,4 +44,6 @@ If the user asks for implementation, make concrete changes and check them. Use [
 
 ## Deliver
 
+For an explicit page analysis report or modification-recommendations report, follow [report](report.md). Produce the complete report even when only a screenshot or description is available; mark the evidence limit instead of substituting a plan or requiring live access.
+
 Present the most consequential findings first, with evidence, impact, exception considered, fix, and validation. Keep taste preferences separate from task/standards issues. Include positive choices worth preserving and untested behavior. A short review may need only a few paragraphs; do not manufacture findings to fill a quota.
