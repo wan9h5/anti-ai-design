@@ -1,6 +1,6 @@
 ---
 name: anti-ai-design
-description: Apply general interface design constraints to create, review, or refactor UI for real users and tasks, deliberate visual character, usable density, interaction quality, truthful capabilities, and feasible implementation. Use for requests to remove generic AI UI patterns or make an interface more purposeful. Does not detect AI authorship.
+description: Apply general interface design constraints to create, review, or refactor UI for real users and tasks, deliberate visual character, usable density, interaction quality, truthful capabilities, and feasible implementation. Use for requests to remove generic AI UI patterns, analyze AI-generated pages, produce a page analysis report with modification recommendations, or make an interface more purposeful. Does not detect AI authorship.
 ---
 
 # Anti-AI Design
@@ -10,6 +10,7 @@ Turn a product brief or existing interface into a concrete, task-fit design. “
 ## Choose the mode and load selectively
 
 - **Create** a screen or feature: read [workflows/create.md](workflows/create.md).
+- **Report** an AI page analysis with modification recommendations: read [workflows/report.md](workflows/report.md), then use the review workflow for evidence-based findings. Treat “AI page” as the requested review subject, not proof of AI authorship.
 - **Review** screenshots, prototypes, live UI, or code: read [workflows/review.md](workflows/review.md).
 - **Refactor**: use the review workflow to establish the problem, then the create workflow for the affected task. Preserve useful domain conventions and working capabilities.
 - Read [workflows/verify.md](workflows/verify.md) for checks appropriate to the actual change and available tools.

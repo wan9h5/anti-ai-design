@@ -1,6 +1,6 @@
 # Anti-AI Design
 
-Latest acceptance follow-up (2026-10-09): all 12 scenario acceptance conditions are met after targeted fixes and review retesting; 75 real Chromium check/measurement records pass. This includes assisted repairs, not a 12/12 first-generation benchmark or overall WCAG certification. [Browser follow-up](tests/runs/2026-10-09-browser/report.md) · [Initial 4 pass / 8 partial run](tests/runs/2026-10-09/report.md).
+Original 12-scenario acceptance follow-up (2026-10-09): all 12 scenario acceptance conditions are met after targeted fixes and review retesting; 75 real Chromium check/measurement records pass. This includes assisted repairs, not a 12/12 first-generation benchmark or overall WCAG certification. [Browser follow-up](tests/runs/2026-10-09-browser/report.md) · [Initial 4 pass / 8 partial run](tests/runs/2026-10-09/report.md).
 
 A general interface design constraint and review framework that helps AI reduce formulaic, hollow, and template-driven output while fitting real users, real tasks, and development constraints.
 
@@ -41,6 +41,14 @@ Core use requires no Python, network connection, GitHub connection, or particula
 - “Use $anti-ai-design to refactor this reconciliation table. Preserve comparison efficiency and verify the changed task.”
 
 The agent should deliver the requested artifact/changes, not stop at discussion. It should ask only consequential missing questions and label assumptions.
+
+## Page analysis reports and modification recommendations
+
+Ask `$anti-ai-design` to analyze screenshots, page descriptions, source or executable pages and deliver a complete report: task/evidence overview, choices to preserve, prioritized findings, concrete modifications, implementation order and acceptance checks. Findings identify location, evidence, impact, confidence and applicable exceptions. Unobserved interaction/performance stays unverified.
+
+Example: “Use $anti-ai-design to analyze this AI-generated page and produce a page analysis report with modification recommendations. Prioritize repairs, give implementable changes and acceptance checks, and leave the code unchanged for now.”
+
+Reports use the user's language and Markdown by default; request a saved file or export format when needed. Appearance does not establish AI authorship, and proposed checks are not passed tests. See the [report workflow](workflows/report.md).
 
 ## Structure
 
