@@ -1,4 +1,4 @@
 interface:
   display_name: "Anti-AI Design"
-  short_description: "Create and review purposeful, truthful product UI"
+  short_description: "Create UI and report page issues with concrete fixes"
   default_prompt: "Use $anti-ai-design to create or improve this interface for its users and tasks."
