@@ -1,0 +1,12 @@
+[
+  {
+    "id": "page-report-description",
+    "prompt": "输出 AI 页面分析报告和修改建议，先不要改代码。页面描述：值班告警界面有七列比较表、三个同等醒目的概览卡片，以及页脚的“本地演示数据”说明。主要操作按钮写“AI 自动解决”，实际能力未提供。",
+    "context": "只有合成文字描述；没有图片、DOM、源码或行为测试。用户需要按严重性比较并认领告警。"
+  },
+  {
+    "id": "page-report-source",
+    "prompt": "Analyze the supplied synthetic HTML and output a page analysis report with modification recommendations. Do not change the page.",
+    "context": "Source inspection only; form-recovery.html from the initial run is supplied. No browser execution requested or performed."
+  }
+]
